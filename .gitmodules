@@ -1,0 +1,3 @@
+[submodule "nsis-streambox2"]
+	path = nsis-streambox2
+	url = ssh://boxstream@development.streambox.com:5979/var/www/html/proj/nsis-streambox2.git
