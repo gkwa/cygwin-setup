@@ -195,7 +195,7 @@ Section "Section Name 1" Section1
 		--no-clobber ^$\r$\n\
 		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
 		http://ftp.gnu.org/gnu/emacs/windows/${emacs-zip}	$\r$\n\
-		$TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/it/software/emacs ${emacs-zip} /r:5 /w:3$\r$\n\
+		cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/it/software/emacs ${emacs-zip} /r:5 /w:3$\r$\n\
 	)$\r$\n\
 	$\r$\n\
 	$TEMP\cygwin-setup\7za.exe x -y -o"$PROGRAMFILES" $TEMP\cygwin-setup\${emacs-zip}$\r$\n\
