@@ -202,6 +202,7 @@ Section "Section Name 1" Section1
 	:: Add emacs bin to user env path$\r$\n\
 	$TEMP\cygwin-setup\pathman.exe /au "$PROGRAMFILES\emacs-${emacs-version}\bin"$\r$\n\	
 	:emacs_install_done$\r$\n\
+	cmd /c start "$PROGRAMFILES\emacs-${emacs-version}\bin\runemacs.exe"$\r$\n\	
 	$\r$\n\
 	'
 	FileClose $R1
