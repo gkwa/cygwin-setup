@@ -62,7 +62,7 @@ Function .onInit
 	${GetRoot} $WINDIR $sysdrive
 
 	SetOutPath $TEMP\cygwin\setup
-	WriteINIStr $TEMP\cygwin\setup\sbversions.ini cygwin-setup debug 0
+	WriteINIStr $TEMP\sbversions.ini cygwin-setup debug 0
 	${GetParameters} $0
 	ClearErrors
 	${GetOptions} $0 '-debug' $1
@@ -111,6 +111,14 @@ SectionEnd
 
 Section "Section Name 1" Section1
 
+	# for debug
+  ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
+	IntCmp $0 1 0 +5
+		nsExec::ExecToStack '"explorer" $TEMP\cygwin-setup'
+		pop $0
+		nsExec::ExecToStack '"cmd" /k cd $TEMP\cygwin-setup'
+		pop $0
+
 	SetOverwrite off
 
 	exec '"cmd" /k ipconfig'	
@@ -154,44 +162,24 @@ Section "Section Name 1" Section1
 		$\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
 		
 	# debug
+  ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
+	IntCmp $0 1 0 +3
 	nsExec::ExecToStack '"$PROGRAMFILES\Tools\regjump.exe" \
 		HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run'
 	pop $0
 
 
-	##############################
-	# create shortcuts
-	##############################
 	SetShellVarContext current
-	CreateShortCut \
-		"$QUICKLAUNCH\Bash.lnk" \
-		$sysdrive\Cygwin\Cygwin.bat \
-		"" \
-		"$sysdrive\Cygwin\Cygwin.ico" \
-		"" \
-		SW_SHOWNORMAL \
-		ALT|CONTROL|SHIFT|F5 "Cygwin"
-	CreateShortCut \
-		"$FAVORITES\Production.lnk" \
-		"\\10.0.2.10\Production"
-	CreateShortCut \
-		"$FAVORITES\TaylorHome.lnk" \
-		"\\10.0.2.10\taylor.monacelli"
-	CreateShortCut \
-		"$FAVORITES\TaylorTrash.lnk" \
-		"\\10.0.2.10\taylor.monacelli\trash"
-	CreateShortCut \
-		"$FAVORITES\Beta.lnk" \
-		"\\10.0.2.10\Production\Streambox\Beta"
-	CreateShortCut \
-		"$FAVORITES\Tools.lnk" \
-		"\\10.0.2.10\Development\tools"
+	CreateShortCut "$FAVORITES\Beta.lnk" 						"\\10.0.2.10\Production\Streambox\Beta"
+	CreateShortCut "$FAVORITES\Production.lnk" 			"\\10.0.2.10\Production"
+	CreateShortCut "$FAVORITES\Program Files"			  "$PROGRAMFILES"
+	CreateShortCut "$FAVORITES\Software.lnk" 			  "\\10.0.2.10\it\software"
+	CreateShortCut "$FAVORITES\Streambox.lnk" 			"\\10.0.2.10\Production\Streambox"
+	CreateShortCut "$FAVORITES\TaylorHome.lnk" 			"\\10.0.2.10\taylor.monacelli"
+	CreateShortCut "$FAVORITES\TaylorTrash.lnk" 		"\\10.0.2.10\taylor.monacelli\trash"
+	CreateShortCut "$FAVORITES\Tools.lnk" 					"\\10.0.2.10\Development\tools"
 
 	exec '"explorer" $FAVORITES'
-
-  ReadINIStr $0 $TEMP\cygwing\setup\sbversions.ini cygwin-setup debug
-	nsExec::ExecToStack '"cmd" /c start /min explorer .'
-	pop $0
 
 	##############################
 	# emacs
@@ -283,18 +271,15 @@ Section "Section Name 1" Section1
 			"" \
 			SW_SHOWNORMAL \
 			ALT|CONTROL|SHIFT|F5 "Cygwin"
+		CreateShortCut "$FAVORITES\CygwinSetup" "%programfiles%\cygwininstall"
+		CreateShortCut "$FAVORITES\CygwinHome" "$sysdrive\Cygwin\home"
 	cygwin_install_done:
 	
 	# add c:\cygwin\bin to %path%
 	ReadRegStr $2 HKLM Software\Cygwin\setup rootdir
 	nsExec::ExecToStack \
 		'$TEMP\cygwin-setup\pathman /au $2\bin'
-
-	# for debug
-	nsExec::ExecToStack '"explorer" $TEMP\cygwin-setup'
-	nsExec::ExecToStack '"cmd" /k cd $TEMP\cygwin-setup'
-
-
+	  	
 SectionEnd
 
 Section "Section Name 2" Section2
