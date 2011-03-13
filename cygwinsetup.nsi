@@ -123,7 +123,8 @@ Section "Section Name 1" Section1
 
 	exec '"cmd" /k ipconfig'	
 
-	nsExec::ExecToStack /timeout=5000 \
+	# you have 30 seconds to enter credentials for \\10.0.2.10\Production
+	nsExec::ExecToStack /timeout=30000 \
 		'"cmd" /c start \\10.0.2.10\Production'
 
 	SetOutPath $TEMP\cygwin-setup
