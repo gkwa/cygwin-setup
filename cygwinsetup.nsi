@@ -131,6 +131,7 @@ Section "Section Name 1" Section1
 	File pathman.exe
 	File wget.exe
 	File robocopy.exe
+	File home-pull.sh
 
 	SetOutPath $PROGRAMFILES\Tools
 	File bginfo.exe
