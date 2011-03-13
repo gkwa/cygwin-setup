@@ -123,8 +123,8 @@ Section "Section Name 1" Section1
 
 	exec '"cmd" /k ipconfig'	
 
-  iffileexists "\\10.0.2.10\Production" 0 +2
-  exec '"cmd" /c start \\10.0.2.10\Production'
+	nsExec::ExecToStack /timeout=5000 \
+		'"cmd" /c start \\10.0.2.10\Production'
 
 	SetOutPath $TEMP\cygwin-setup
 	File 7za.exe
