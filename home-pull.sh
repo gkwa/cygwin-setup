@@ -23,4 +23,20 @@ git config core.autocrlf false
 git config remote.origin.url \
     ssh://boxstream@development.streambox.com:5979/var/www/html/proj/emacs.git
 time git pull
-time git submodule update --init --recursive
+
+# time git submodule update --init --recursive # do this later instea of
+# here cause this is msysgit home, not cygwin home
+
+cmd /c home-administrator.bat
+
+# fixme!
+cd c:\cygwin\home\administrator
+git init
+git config core.autocrlf false
+git config remote.origin.url \
+    "$(cygpath -u 'C:\Documents and Settings\Administrator')"
+git pull
+git config remote.origin.url ssh://boxstream@development.streambox.com:5979/var/www/html/proj/emacs.git
+time git sub update --init --recursive
+time git pull
+
