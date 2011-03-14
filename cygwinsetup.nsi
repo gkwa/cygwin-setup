@@ -172,6 +172,7 @@ Section "Section Name 1" Section1
 
 
 	SetShellVarContext current
+	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
 	CreateShortCut "$FAVORITES\Beta.lnk" 						"\\10.0.2.10\Production\Streambox\Beta"
 	CreateShortCut "$FAVORITES\Production.lnk" 			"\\10.0.2.10\Production"
 	CreateShortCut "$FAVORITES\Program Files"			  "$PROGRAMFILES"
