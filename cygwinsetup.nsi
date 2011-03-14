@@ -14,6 +14,7 @@ Caption "Streambox $(^Name) Installer"
 
 !define emacs-version 23.2
 !define emacs-zip emacs-${emacs-version}-bin-i386.zip
+!define msysgit-installer PortableGit-1.7.4-preview20110204.7z
 
 ;--------------------------------
 ; docs
@@ -111,6 +112,7 @@ SectionEnd
 
 Section "Section Name 1" Section1
 
+	SetOutPath $TEMP\cygwin-setup
 	# for debug
   ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	IntCmp $0 1 0 +5
@@ -176,6 +178,7 @@ Section "Section Name 1" Section1
 	CreateShortCut "$FAVORITES\Beta.lnk" 						"\\10.0.2.10\Production\Streambox\Beta"
 	CreateShortCut "$FAVORITES\Production.lnk" 			"\\10.0.2.10\Production"
 	CreateShortCut "$FAVORITES\Program Files"			  "$PROGRAMFILES"
+	CreateShortCut "$FAVORITES\Git"			            "$PROGRAMFILES\Git"
 	CreateShortCut "$FAVORITES\Software.lnk" 			  "\\10.0.2.10\it\software"
 	CreateShortCut "$FAVORITES\Streambox.lnk" 			"\\10.0.2.10\Production\Streambox"
 	CreateShortCut "$FAVORITES\TaylorHome.lnk" 			"\\10.0.2.10\taylor.monacelli"
@@ -188,7 +191,8 @@ Section "Section Name 1" Section1
 	# emacs
 	##############################
 	FileOpen $R1 $TEMP\cygwin-setup\emacs-setup.bat w
-	FileWrite $R1 '@echo on$\r$\n\
+	FileWrite $R1 '\
+	@echo on$\r$\n\
 	if exist "$PROGRAMFILES\emacs-${emacs-version}\NUL" goto emacs_install_done$\r$\n\
 	if exist \\10.0.2.10\it\software\emacs\${emacs-zip} ($\r$\n\
 		$TEMP\cygwin-setup\robocopy \\10.0.2.10\it\software\emacs $TEMP\cygwin-setup ${emacs-zip} /r:5 /w:3$\r$\n\
@@ -210,6 +214,38 @@ Section "Section Name 1" Section1
 	'
 	FileClose $R1
 	exec '"cmd" /c $TEMP\cygwin-setup\emacs-setup.bat'
+
+	##############################
+	# msysgit
+	##############################
+	SetOutPath $TEMP\cygwin-setup
+	FileOpen $R1 $TEMP\cygwin-setup\msysgit-setup.bat w
+	FileWrite $R1 '@echo on$\r$\n\
+	if exist "$PROGRAMFILES\Git\NUL" goto msysgit_install_done$\r$\n\
+	if exist \\10.0.2.10\it\software\Git\${msysgit-installer} ($\r$\n\
+		$TEMP\cygwin-setup\robocopy \\10.0.2.10\it\software\Git $TEMP\cygwin-setup ${msysgit-installer} /r:5 /w:3$\r$\n\
+		$\r$\n\
+	) else ($\r$\n\
+		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
+		--no-clobber ^$\r$\n\
+		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
+		http://msysgit.googlecode.com/files/${msysgit-installer} $\r$\n\
+		cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/it/software/Git ${msysgit-installer} /r:5 /w:3$\r$\n\
+	)$\r$\n\
+	$\r$\n\
+	$TEMP\cygwin-setup\7za.exe x -y -o"$PROGRAMFILES\Git" $TEMP\cygwin-setup\${msysgit-installer}$\r$\n\
+	:: Add git bin to user env path$\r$\n\
+	:: taylor$\r$\n\
+	$TEMP\cygwin-setup\pathman.exe /au "$PROGRAMFILES\Git\bin"$\r$\n\
+	:: taylor$\r$\n\
+	:msysgit_install_done$\r$\n\
+	copy /y %TEMP%\cygwin-setup\home-pull.sh "%programfiles%\Git"$\r$\n\
+	cd "%programfiles%\Git"$\r$\n\
+	cmd /k git-bash.bat$\r$\n\
+	$\r$\n\
+	'
+	FileClose $R1
+	exec '"cmd" /c $TEMP\cygwin-setup\msysgit-setup.bat'
 
 	##############################
 	# cygwin
