@@ -123,7 +123,7 @@ Section "Section Name 1" Section1
 
 	SetOverwrite off
 
-	exec '"cmd" /k ipconfig'	
+	exec '"cmd" /k ipconfig|more'	
 
 	# you have 30 seconds to enter credentials for \\10.0.2.10\Production
 	nsExec::ExecToStack /timeout=30000 \
@@ -161,7 +161,7 @@ Section "Section Name 1" Section1
 		HKLM \
 		Software\Microsoft\Windows\CurrentVersion\Run \
 		bginfo \
-		"$PROGRAMFILES\Tools\bginfo.bgi $\"$PROGRAMFILES\Tools\bginfo.exe$\" /timer:0"
+		"$PROGRAMFILES\Tools\bginfo.exe $\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0"
 	nsExec::ExecToStack '"$PROGRAMFILES\Tools\bginfo.exe" \
 		$\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
 		
@@ -175,15 +175,17 @@ Section "Section Name 1" Section1
 
 	SetShellVarContext current
 	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
-	CreateShortCut "$FAVORITES\Beta.lnk" 						"\\10.0.2.10\Production\Streambox\Beta"
-	CreateShortCut "$FAVORITES\Production.lnk" 			"\\10.0.2.10\Production"
-	CreateShortCut "$FAVORITES\Program Files"			  "$PROGRAMFILES"
-	CreateShortCut "$FAVORITES\Git"			            "$PROGRAMFILES\Git"
-	CreateShortCut "$FAVORITES\Software.lnk" 			  "\\10.0.2.10\it\software"
-	CreateShortCut "$FAVORITES\Streambox.lnk" 			"\\10.0.2.10\Production\Streambox"
-	CreateShortCut "$FAVORITES\TaylorHome.lnk" 			"\\10.0.2.10\taylor.monacelli"
-	CreateShortCut "$FAVORITES\TaylorTrash.lnk" 		"\\10.0.2.10\taylor.monacelli\trash"
-	CreateShortCut "$FAVORITES\Tools.lnk" 					"\\10.0.2.10\Development\tools"
+	CreateShortCut "$FAVORITES\Beta.lnk" 						\\10.0.2.10\Production\Streambox\Beta
+	CreateShortCut "$FAVORITES\Production.lnk" 			\\10.0.2.10\Production
+	CreateShortCut "$FAVORITES\Program Files"			  $PROGRAMFILES
+	CreateShortCut "$FAVORITES\Git"			            $PROGRAMFILES\Git
+	CreateShortCut "$FAVORITES\Software.lnk" 			  \\10.0.2.10\it\software
+	CreateShortCut "$FAVORITES\CygwinPackages.lnk"  \\10.0.2.10\it\software\cygwin\packages
+	CreateShortCut "$FAVORITES\Streambox.lnk" 			\\10.0.2.10\Production\Streambox
+	CreateShortCut "$FAVORITES\TaylorHome.lnk" 			\\10.0.2.10\taylor.monacelli
+	CreateShortCut "$FAVORITES\TaylorTrash.lnk" 		\\10.0.2.10\taylor.monacelli\trash
+	CreateShortCut "$FAVORITES\Tools.lnk" 					\\10.0.2.10\Development\tools
+
 
 	exec '"explorer" $FAVORITES'
 
@@ -265,7 +267,7 @@ Section "Section Name 1" Section1
 		File setup.exe
 		nsExec::ExecToStack \
 			/timeout=10000 \
-			'cmd /c start http://cygwin.com/setup.exe'
+			'cmd /c start /min http://cygwin.com/setup.exe'
 		pop $0
 
 	SetOutPath '$PROGRAMFILES\cygwininstall'
@@ -276,8 +278,26 @@ Section "Section Name 1" Section1
 	SetOverwrite off
 	File installed.db
 
-	IfFileExists $sysdrive\cygwin\packages download2_done 0
-		CreateDirectory $sysdrive\cygwin\packages
+	##############################
+	# 
+	##############################
+	CreateDirectory $sysdrive\cygwin\packages
+	IfFileExists \\10.0.2.10\it\software\cygwin\packages 0 +2
+		nsExec::ExecToStack '$TEMP\cygwin-setup\robocopy \
+			//10.0.2.10/it/software/cygwin/packages \
+			$sysdrive\cygwin\packages \
+			/xf setup.log \
+			/xf setup.log.full \
+			/r:5 /r:10 /w:30 /mir'
+
+	${GetSize} $sysdrive\cygwin\packages "/S=0M /G=1" $0 $1 $2
+	DetailPrint "$sysdrive\cygwin\packages has $0 MB"
+	WriteINIStr $TEMP\sbversions.ini cygwin-setup packages_size_reminder \
+		"Size is in MB"
+	WriteINIStr $TEMP\sbversions.ini cygwin-setup packages_size $0
+
+	# 15MB
+	${If} $0 < 15
 		nsExec::ExecToStack '"cmd" /c start /min $sysdrive\cygwin\packages'
 		pop $0
 		# cmd /c "%programfiles%\cygwinInstall\setup.exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site ftp://mirrors.xmission.com/cygwin
@@ -290,7 +310,15 @@ Section "Section Name 1" Section1
 			--local-package-dir $sysdrive\cygwin\packages \
 			--quiet-mode \
 			--site ftp://mirrors.xmission.com/cygwin'
-	download2_done:
+		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
+			exec '$TEMP\cygwin-setup\robocopy \
+				$sysdrive\cygwin\packages \
+				//10.0.2.10/it/software/cygwin/packages \
+				/xf setup.log \
+				/xf setup.log.full \
+				/r:5 /w:3 /mir'
+  ${EndIf}
+
 
 	IfFileExists $sysdrive\cygwin\Cygwin.bat cygwin_install_done 0
 		DetailPrint 'Installing cygwin packages...'
