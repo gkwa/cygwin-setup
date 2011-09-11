@@ -1,16 +1,18 @@
 basename=cygwinsetup
 
-installer=$(basename).exe
+include VERSION.mk
+
+installer=$(basename)_v$(version).exe
 i=$(installer)
 
 
-$(i):						\
-	$(basename).nsi				\
-	bginfo.bgi				\
-	cygwinsetup.nsi				\
-	home-administrator.bat			\
-	home-pull.sh				\
-	installed.db				\
+$(i): \
+	$(basename).nsi \
+	bginfo.bgi \
+	cygwinsetup.nsi \
+	home-administrator.bat \
+	home-pull.sh \
+	installed.db \
 	Makefile
 	makensis $(basename).nsi
 
