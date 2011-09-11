@@ -14,7 +14,9 @@ $(i): \
 	home-pull.sh \
 	installed.db \
 	Makefile
-	makensis $(basename).nsi
+	makensis \
+		/Doutfile=$(installer) \
+		$(basename).nsi
 
 upload: $(i)
 	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $(i)

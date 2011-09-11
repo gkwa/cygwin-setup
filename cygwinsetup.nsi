@@ -4,7 +4,7 @@
 !include FileFunc.nsh
 
 Name cygwinsetup
-OutFile cygwinsetup.exe
+OutFile ${outfile}
 
 XPStyle on
 ShowInstDetails show
