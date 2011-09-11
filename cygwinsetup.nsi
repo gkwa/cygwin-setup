@@ -125,7 +125,7 @@ Section "Section Name 1" Section1
 
 	exec '"cmd" /k ipconfig|more'	
 
-	# you have 30 seconds to enter credentials for \\10.0.2.10\Production
+	DetailPrint "you have 30 seconds to enter credentials for \\10.0.2.10\Production"
 	nsExec::ExecToStack /timeout=30000 \
 		'"cmd" /c start \\10.0.2.10\Production'
 
@@ -161,7 +161,7 @@ Section "Section Name 1" Section1
 		HKLM \
 		Software\Microsoft\Windows\CurrentVersion\Run \
 		bginfo \
-		"$PROGRAMFILES\Tools\bginfo.exe $\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0"
+		'$\"$PROGRAMFILES\Tools\bginfo.exe$\" $\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
 	nsExec::ExecToStack '"$PROGRAMFILES\Tools\bginfo.exe" \
 		$\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
 		
@@ -174,18 +174,19 @@ Section "Section Name 1" Section1
 
 
 	SetShellVarContext current
-	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
-	CreateShortCut "$FAVORITES\Beta.lnk" 						\\10.0.2.10\Production\Streambox\Beta
-	CreateShortCut "$FAVORITES\Production.lnk" 			\\10.0.2.10\Production
 	CreateShortCut "$FAVORITES\Program Files"			  $PROGRAMFILES
 	CreateShortCut "$FAVORITES\Git"			            $PROGRAMFILES\Git
-	CreateShortCut "$FAVORITES\Software.lnk" 			  \\10.0.2.10\it\software
-	CreateShortCut "$FAVORITES\CygwinPackages.lnk"  \\10.0.2.10\it\software\cygwin\packages
-	CreateShortCut "$FAVORITES\Streambox.lnk" 			\\10.0.2.10\Production\Streambox
-	CreateShortCut "$FAVORITES\TaylorHome.lnk" 			\\10.0.2.10\taylor.monacelli
-	CreateShortCut "$FAVORITES\TaylorTrash.lnk" 		\\10.0.2.10\taylor.monacelli\trash
-	CreateShortCut "$FAVORITES\Tools.lnk" 					\\10.0.2.10\Development\tools
+	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
 
+	# fixme: this blocks if \\10.0.2.10 isn't available...I think
+	# CreateShortCut "$FAVORITES\Beta.lnk" 						\\10.0.2.10\Production\Streambox\Beta
+	# CreateShortCut "$FAVORITES\Production.lnk" 			\\10.0.2.10\Production
+	# CreateShortCut "$FAVORITES\Software.lnk" 			  \\10.0.2.10\it\software
+	# CreateShortCut "$FAVORITES\CygwinPackages.lnk"  \\10.0.2.10\it\software\cygwin\packages
+	# CreateShortCut "$FAVORITES\Streambox.lnk" 			\\10.0.2.10\Production\Streambox
+	# CreateShortCut "$FAVORITES\TaylorHome.lnk" 			\\10.0.2.10\taylor.monacelli
+	# CreateShortCut "$FAVORITES\TaylorTrash.lnk" 		\\10.0.2.10\taylor.monacelli\trash
+	# CreateShortCut "$FAVORITES\Tools.lnk" 					\\10.0.2.10\Development\tools
 
 	exec '"explorer" $FAVORITES'
 
@@ -296,8 +297,9 @@ Section "Section Name 1" Section1
 		"Size is in MB"
 	WriteINIStr $TEMP\sbversions.ini cygwin-setup packages_size $0
 
-	# 15MB
-	${If} $0 < 15
+
+	# 5MB
+	${If} $0 < 5
 		nsExec::ExecToStack '"cmd" /c start /min $sysdrive\cygwin\packages'
 		pop $0
 		# cmd /c "%programfiles%\cygwinInstall\setup.exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site ftp://mirrors.xmission.com/cygwin
@@ -311,7 +313,7 @@ Section "Section Name 1" Section1
 			--quiet-mode \
 			--site ftp://mirrors.xmission.com/cygwin'
 		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
-			exec '$TEMP\cygwin-setup\robocopy \
+			exec '"cmd" /c start $TEMP\cygwin-setup\robocopy \
 				$sysdrive\cygwin\packages \
 				//10.0.2.10/it/software/cygwin/packages \
 				/xf setup.log \
@@ -350,7 +352,33 @@ Section "Section Name 1" Section1
 	  	
 SectionEnd
 
-Section "Section Name 2" Section2
+Section download_taylor_specific_settings section_download_taylor_specific_settings
+
+	# Create $sysdrive\cygwin\home\%USERNAME%, download
+  # http://69.90.235.86/o.zip and expand it into
+  # $sysdrive\cygwin\home\%USERNAME%
+
+	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	CreateDirectory $0 # c:\cygwin\home\Administrator (for example)
+
+	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
+	FileWrite $R1 '\
+	@echo on$\r$\n\
+	if exist \\10.0.2.10\taylor.monacelli\o.zip ($\r$\n\
+		$TEMP\cygwin-setup\robocopy \\10.0.2.10\taylor.monacelli $TEMP\cygwin-setup o.zip /r:5 /w:3$\r$\n\
+		$\r$\n\
+	) else ($\r$\n\
+		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
+		--no-clobber ^$\r$\n\
+		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
+		http://69.90.235.86/o.zip$\r$\n\
+		cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/taylor.monacelli o.zip /r:5 /w:3$\r$\n\
+	)$\r$\n\
+	$\r$\n\
+	$TEMP\cygwin-setup\7za.exe x -y -o"$0" $TEMP\cygwin-setup\o.zip$\r$\n\
+	'
+	FileClose $R1
+	exec '"$SYSDIR\cmd.exe" /c $TEMP\cygwin-setup\taylor-specific-setup.bat'
 
 SectionEnd
 

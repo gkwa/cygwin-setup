@@ -1,18 +1,26 @@
 basename=cygwinsetup
 
-$(basename).exe: $(basename).nsi
+installer=$(basename).exe
+i=$(installer)
+
+
+$(i):						\
+	$(basename).nsi				\
+	bginfo.bgi				\
+	cygwinsetup.nsi				\
+	home-administrator.bat			\
+	home-pull.sh				\
+	installed.db				\
+	Makefile
 	makensis $(basename).nsi
 
-run: $(basename).exe
-	cmd /c $(basename).exe
+upload: $(i)
+	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $(i)
+	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $(i)
 
-test: $(basename).exe
-	-cmd /c start /min robocopy . //10.0.2.102/c$$ $(basename).exe /w:3 /r:100
-	-cmd /c start /min robocopy . //10.0.2.185/c$$ $(basename).exe /w:3 /r:100
-	-cmd /c start /min robocopy . //10.0.2.135/c$$ $(basename).exe /w:3 /r:100
-	-cmd /c start /min robocopy . //10.0.2.10/taylor.monacelli/trash $(basename).exe /w:3 /r:100
-	-cmd /c start /min robocopy . //10.0.2.166/c$$ $(basename).exe /w:3 /r:100
-	-cmd /c start /min robocopy . //10.0.2.100/c$$ $(basename).exe /w:3 /r:100
+run: $(i)
+	cmd /c $(i)
 
-clean : 
-	-rm $(basename).exe
+clean: 
+	-rm \
+		$(i)
