@@ -302,7 +302,7 @@ Section "Section Name 1" Section1
 	${If} $0 < 5
 		nsExec::ExecToStack '"cmd" /c start /min $sysdrive\cygwin\packages'
 		pop $0
-		# cmd /c "%programfiles%\cygwinInstall\setup.exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site ftp://mirrors.xmission.com/cygwin
+		# cmd /c "%programfiles%\cygwinInstall\setup.exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site http://cygwin.mirrors.pair.com
 		DetailPrint 'Downloading packages specified \
 			in $sysdrive\cygwin\etc\setup\installed.db'
 		ExecWait \
@@ -311,7 +311,7 @@ Section "Section Name 1" Section1
 			--no-desktop \
 			--local-package-dir $sysdrive\cygwin\packages \
 			--quiet-mode \
-			--site ftp://mirrors.xmission.com/cygwin'
+			--site http://cygwin.mirrors.pair.com'
 		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
 			exec '"cmd" /c start $TEMP\cygwin-setup\robocopy \
 				$sysdrive\cygwin\packages \
