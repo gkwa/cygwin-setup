@@ -174,8 +174,8 @@ Section "Section Name 1" Section1
 
 
 	SetShellVarContext current
-	CreateShortCut "$FAVORITES\Program Files"			  $PROGRAMFILES
-	CreateShortCut "$FAVORITES\Git"			            $PROGRAMFILES\Git
+	CreateShortCut "$FAVORITES\Program Files.lnk"			  $PROGRAMFILES
+	CreateShortCut "$FAVORITES\Git.lnk"			            $PROGRAMFILES\Git
 	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
 
 	# fixme: this blocks if \\10.0.2.10 isn't available...I think
@@ -333,16 +333,15 @@ Section "Section Name 1" Section1
 			--local-package-dir $sysdrive\cygwin\packages'
 
 		SetShellVarContext current
-		CreateShortCut \
-			"$QUICKLAUNCH\Bash.lnk" \
+		CreateShortCut "$QUICKLAUNCH\Bash.lnk" \
 			$sysdrive\Cygwin\Cygwin.bat \
 			"" \
 			"$sysdrive\Cygwin\Cygwin.ico" \
 			"" \
 			SW_SHOWNORMAL \
 			ALT|CONTROL|SHIFT|F5 "Cygwin"
-		CreateShortCut "$FAVORITES\CygwinSetup" "%programfiles%\cygwininstall"
-		CreateShortCut "$FAVORITES\CygwinHome" "$sysdrive\Cygwin\home"
+		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwininstall"
+		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$sysdrive\Cygwin\home"
 	cygwin_install_done:
 	
 	# add c:\cygwin\bin to %path%
