@@ -381,6 +381,12 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 SectionEnd
 
+Section -cleanup section_cleanup
+	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
+	${If} 1 != $0
+		rmdir /r '$TEMP\cygwin-setup'
+	${EndIf}
+SenctionEnd
 
 ;--------------------------------
 ; this must remain after the Section definitions
