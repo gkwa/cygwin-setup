@@ -18,15 +18,15 @@ Caption "Streambox $(^Name) Installer"
 
 ;--------------------------------
 ; docs
-# http://nsis.sourceforge.net/Docs 
-# http://nsis.sourceforge.net/Macro_vs_Function 
-# http://nsis.sourceforge.net/Adding_custom_installer_pages 
-# http://nsis.sourceforge.net/ConfigWrite 
-# loops  
-# http://nsis.sourceforge.net/Docs/Chapter2.html#\2.3.6 
+# http://nsis.sourceforge.net/Docs
+# http://nsis.sourceforge.net/Macro_vs_Function
+# http://nsis.sourceforge.net/Adding_custom_installer_pages
+# http://nsis.sourceforge.net/ConfigWrite
+# loops
+# http://nsis.sourceforge.net/Docs/Chapter2.html#\2.3.6
 
 ;--------------------------------
-Var Dialog 
+Var Dialog
 Var sysdrive
 
 ;--------------------------------
@@ -34,7 +34,7 @@ Var sysdrive
 
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the Streambox setup wizard."
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_RIGHT 
+!define MUI_HEADERIMAGE_RIGHT
 !define MUI_HEADERIMAGE_BITMAP nsis-streambox2\Graphics\sblogo.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP nsis-streambox2\Graphics\sbside.bmp
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP nsis-streambox2\Graphics\sbside.bmp
@@ -78,14 +78,14 @@ FunctionEnd
 
 
 Function nsDialogsPage
-  nsDialogs::Create 1018
-  Pop $Dialog
+	nsDialogs::Create 1018
+	Pop $Dialog
 
-  ${If} $Dialog == error
-    Abort
-  ${EndIf}
+	${If} $Dialog == error
+		Abort
+	${EndIf}
 
-  nsDialogs::Show
+	nsDialogs::Show
 
 FunctionEnd
 
@@ -114,7 +114,7 @@ Section "Section Name 1" Section1
 
 	SetOutPath $TEMP\cygwin-setup
 	# for debug
-  ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
+	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	IntCmp $0 1 0 +5
 		nsExec::ExecToStack '"explorer" $TEMP\cygwin-setup'
 		pop $0
@@ -123,7 +123,7 @@ Section "Section Name 1" Section1
 
 	SetOverwrite off
 
-	exec '"cmd" /k ipconfig|more'	
+	exec '"cmd" /k ipconfig|more'
 
 	DetailPrint "you have 30 seconds to enter credentials for \\10.0.2.10\Production"
 	nsExec::ExecToStack /timeout=30000 \
@@ -164,9 +164,9 @@ Section "Section Name 1" Section1
 		'$\"$PROGRAMFILES\Tools\bginfo.exe$\" $\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
 	nsExec::ExecToStack '"$PROGRAMFILES\Tools\bginfo.exe" \
 		$\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
-		
+
 	# debug
-  ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
+	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	IntCmp $0 1 0 +3
 	nsExec::ExecToStack '"$PROGRAMFILES\Tools\regjump.exe" \
 		HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run'
@@ -174,14 +174,14 @@ Section "Section Name 1" Section1
 
 
 	SetShellVarContext current
-	CreateShortCut "$FAVORITES\Program Files.lnk"			  $PROGRAMFILES
-	CreateShortCut "$FAVORITES\Git.lnk"			            $PROGRAMFILES\Git
+	CreateShortCut "$FAVORITES\Program Files.lnk"				$PROGRAMFILES
+	CreateShortCut "$FAVORITES\Git.lnk"									$PROGRAMFILES\Git
 	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
 
 	# fixme: this blocks if \\10.0.2.10 isn't available...I think
 	# CreateShortCut "$FAVORITES\Beta.lnk" 						\\10.0.2.10\Production\Streambox\Beta
 	# CreateShortCut "$FAVORITES\Production.lnk" 			\\10.0.2.10\Production
-	# CreateShortCut "$FAVORITES\Software.lnk" 			  \\10.0.2.10\it\software
+	# CreateShortCut "$FAVORITES\Software.lnk" 				\\10.0.2.10\it\software
 	# CreateShortCut "$FAVORITES\CygwinPackages.lnk"  \\10.0.2.10\it\software\cygwin\packages
 	# CreateShortCut "$FAVORITES\Streambox.lnk" 			\\10.0.2.10\Production\Streambox
 	# CreateShortCut "$FAVORITES\TaylorHome.lnk" 			\\10.0.2.10\taylor.monacelli
@@ -257,7 +257,7 @@ Section "Section Name 1" Section1
 		DetailPrint 'Downloading cygwin setup.exe'
 		nsExec::ExecToStack \
 			/timeout=10000 \
-			'$TEMP\cygwin-setup\wget.exe \			
+			'$TEMP\cygwin-setup\wget.exe \
 			--no-clobber \
 			--directory-prefix=$TEMP\cygwin-setup \
 			http://cygwin.com/setup.exe'
@@ -280,7 +280,7 @@ Section "Section Name 1" Section1
 	File installed.db
 
 	##############################
-	# 
+	#
 	##############################
 	CreateDirectory $sysdrive\cygwin\packages
 	IfFileExists \\10.0.2.10\it\software\cygwin\packages 0 +2
@@ -319,7 +319,7 @@ Section "Section Name 1" Section1
 				/xf setup.log \
 				/xf setup.log.full \
 				/r:5 /w:3 /mir'
-  ${EndIf}
+	${EndIf}
 
 
 	IfFileExists $sysdrive\cygwin\Cygwin.bat cygwin_install_done 0
@@ -343,19 +343,19 @@ Section "Section Name 1" Section1
 		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwininstall"
 		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$sysdrive\Cygwin\home"
 	cygwin_install_done:
-	
+
 	# add c:\cygwin\bin to %path%
 	ReadRegStr $2 HKLM Software\Cygwin\setup rootdir
 	nsExec::ExecToStack \
 		'$TEMP\cygwin-setup\pathman /au $2\bin'
-	  	
+
 SectionEnd
 
 Section download_taylor_specific_settings section_download_taylor_specific_settings
 
 	# Create $sysdrive\cygwin\home\%USERNAME%, download
-  # http://69.90.235.86/o.zip and expand it into
-  # $sysdrive\cygwin\home\%USERNAME%
+	# http://69.90.235.86/o.zip and expand it into
+	# $sysdrive\cygwin\home\%USERNAME%
 
 	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
 	CreateDirectory $0 # c:\cygwin\home\Administrator (for example)
@@ -383,14 +383,14 @@ SectionEnd
 
 
 ;--------------------------------
-; this must remain after the Section definitions 
+; this must remain after the Section definitions
 
 LangString DESC_Section1 ${LANG_ENGLISH} "Description of section 1."
 LangString DESC_Section2 ${LANG_ENGLISH} "Description of section 2."
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${Section1} $(DESC_Section1)
-  !insertmacro MUI_DESCRIPTION_TEXT ${Section2} $(DESC_Section2)
+	!insertmacro MUI_DESCRIPTION_TEXT ${Section1} $(DESC_Section1)
+	!insertmacro MUI_DESCRIPTION_TEXT ${Section2} $(DESC_Section2)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 # Emacs vars

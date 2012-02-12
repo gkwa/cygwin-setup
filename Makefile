@@ -25,6 +25,6 @@ upload: $(i)
 run: $(i)
 	cmd /c $(i)
 
-clean: 
+clean:
 	-rm \
 		$(i)
