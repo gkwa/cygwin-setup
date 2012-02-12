@@ -66,7 +66,7 @@ Function .onInit
 	WriteINIStr $TEMP\sbversions.ini cygwin-setup debug 0
 	${GetParameters} $0
 	ClearErrors
-	${GetOptions} $0 '-debug' $1
+	${GetOptions} $0 '/debug' $1
 	${IfNot} ${Errors}
 		WriteINIStr $TEMP\sbversions.ini cygwin-setup debug 1
 	${EndIf}
