@@ -386,7 +386,7 @@ Section -cleanup section_cleanup
 	${If} 1 != $0
 		rmdir /r '$TEMP\cygwin-setup'
 	${EndIf}
-SenctionEnd
+SectionEnd
 
 ;--------------------------------
 ; this must remain after the Section definitions
