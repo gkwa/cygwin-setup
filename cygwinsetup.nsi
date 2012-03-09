@@ -385,6 +385,8 @@ Section -cleanup section_cleanup
 	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	${If} 1 != $0
 		rmdir /r '$TEMP\cygwin-setup'
+	${Else}
+		nsExec::ExecToStack '"explorer" "$TEMP\cygwin-setup"'
 	${EndIf}
 SectionEnd
 
