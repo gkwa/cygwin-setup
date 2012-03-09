@@ -5,6 +5,9 @@ include VERSION.mk
 installer=$(basename)_v$(version).exe
 i=$(installer)
 
+# Must use unicode since it supports 2048 byte strings
+# fixme: a better method is to write out smaller strings to batch file
+MAKENSIS=c:/Program\ Files/NSIS/Unicode/makensis.exe
 
 $(i): \
 	$(basename).nsi \
@@ -14,7 +17,7 @@ $(i): \
 	home-pull.sh \
 	installed.db \
 	Makefile
-	makensis \
+	$(MAKENSIS) \
 		/Doutfile=$(installer) \
 		$(basename).nsi
 
