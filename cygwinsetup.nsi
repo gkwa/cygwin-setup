@@ -382,10 +382,18 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 SectionEnd
 
 Section -cleanup section_cleanup
+
+	FileOpen $R1 $TEMP\cygwin-setup-cleanup.bat w
+	FileWrite $R1 '\
+		@echo on$\r$\n\
+		cd $TEMP$\r$\n\
+		rd /q /s cygwin-setup$\r$\n\
+	'
+	FileClose $R1
+	WriteRegStr HKLM SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce 'cygwin-setup-cleanup' '$TEMP\cygwin-setup-cleanup.bat'
+
 	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
-	${If} 1 != $0
-		rmdir /r '$TEMP\cygwin-setup'
-	${Else}
+	${If} 1 == $0
 		nsExec::ExecToStack '"explorer" "$TEMP\cygwin-setup"'
 	${EndIf}
 SectionEnd
