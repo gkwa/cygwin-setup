@@ -264,7 +264,8 @@ Section "Section Name 1" Section1
 		pop $0
 	download_done:
 
-	IfFileExists $TEMP\cygwin-setup\setup.exe +4 0
+	IfFileExists $TEMP\cygwin-setup\setup.exe +5
+		DetailPrint 'Initiating manual download with default browser'
 		File setup.exe
 		nsExec::ExecToStack \
 			/timeout=10000 \
