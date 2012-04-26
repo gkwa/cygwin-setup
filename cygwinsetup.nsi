@@ -136,7 +136,7 @@ Section "Section Name 1" Section1
 	File robocopy.exe
 	File home-pull.sh
 
-	SetOutPath $PROGRAMFILES\Tools
+	SetOutPath '$PROGRAMFILES\Tools'
 	File bginfo.exe
 	File bginfo.bgi
 	File regjump.exe
