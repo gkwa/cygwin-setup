@@ -334,13 +334,21 @@ Section "Section Name 1" Section1
 			--local-package-dir $sysdrive\cygwin\packages'
 
 		SetShellVarContext current
-		CreateShortCut "$QUICKLAUNCH\Bash.lnk" \
-			$sysdrive\Cygwin\Cygwin.bat \
-			"" \
-			"$sysdrive\Cygwin\Cygwin.ico" \
-			"" \
-			SW_SHOWNORMAL \
-			ALT|CONTROL|SHIFT|F5 "Cygwin"
+		FileOpen $R1 $sysdrive\Cygwin\Cygwin2.bat w
+		FileWrite $R1 "\
+			@echo off$\r$\n\
+			$sysdrive$\r$\n\
+			chdir $sysdrive\cygwin\bin$\r$\n\
+			start mintty -$\r$\n"
+		FileClose $R1
+		CreateShortCut "$sysdrive\Cygwin\Cygwin2.lnk" \
+			"$SYSDIR\cmd.exe" \
+			"/c $sysdrive\Cygwin\Cygwin2.bat" \
+			"$sysdrive\Cygwin\bin\mintty.exe"
+
+		Delete "$QUICKLAUNCH\Bash.lnk"
+		CopyFiles $sysdrive\Cygwin\Cygwin2.lnk "$QUICKLAUNCH"
+
 		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwininstall"
 		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$sysdrive\Cygwin\home"
 	cygwin_install_done:
