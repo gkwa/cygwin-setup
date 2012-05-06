@@ -11,6 +11,8 @@ MAKENSIS=c:/Program\ Files/NSIS/Unicode/makensis.exe
 
 VPATH=add_reboot_icon_to_quicklaunch_bar
 
+changelog=$(i)-changelog.txt
+
 $(i): \
 	$(basename).nsi \
 	bginfo.bgi \
@@ -28,14 +30,26 @@ add_reboot_icon_to_quicklaunch_bar.exe:
 	$(MAKE) -C add_reboot_icon_to_quicklaunch_bar installer=add_reboot_icon_to_quicklaunch_bar.exe
 
 
-upload: $(i)
-	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $(i)
-	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $(i)
+upload: $(outfile) $(changelog)
+	-robocopy . //10.0.2.10/Production/Streambox/StreamboxLive/Server $^
+
+changelog: $(changelog)
+$(changelog):
+	git log --abbrev-commit --stat > $@
+	unix2dos $@
+.PHONY: $(changelog)
+
+
+upload: $(i) $(changelog)
+	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $(i) $(changelog)
+	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $(i) $(changelog)
 
 run: $(i)
 	cmd /c $(i)
 
 clean:
-	-rm \
-		$(i)
+	-rm -f \
+		$(installer) \
+		$(i) \
+		$(changelog)
 	$(MAKE) -C add_reboot_icon_to_quicklaunch_bar installer=add_reboot_icon_to_quicklaunch_bar.exe clean
