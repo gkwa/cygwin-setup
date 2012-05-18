@@ -114,7 +114,7 @@ Section "Section Name 1" Section1
 
 	SetOutPath $TEMP\cygwin-setup
 	File add_reboot_icon_to_quicklaunch_bar\add_reboot_icon_to_quicklaunch_bar.exe
-	nsExec::ExecToStack add_reboot_icon_to_quicklaunch_bar.exe
+	nsExec::Exec add_reboot_icon_to_quicklaunch_bar.exe
 
 	SetOutPath $TEMP\cygwin-setup
 	# for debug
