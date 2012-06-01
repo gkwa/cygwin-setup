@@ -9,7 +9,6 @@ bash bash-0.tar.bz2 0
 bash-completion bash-completion-0.tar.bz2 0
 bc bc-0.tar.bz2 0
 binutils binutils-0.tar.bz2 0
-bsdiff bsdiff-0.tar.bz2 0
 bzip2 bzip2-0.tar.bz2 0
 cpio cpio-0.tar.bz2 0
 cron cron-0.tar.bz2 0
@@ -68,6 +67,7 @@ libxml2 libxml2-0.tar.bz2 0
 libxslt libxslt-0.tar.bz2 0
 login login-0.tar.bz2 0
 lynx lynx-0.tar.bz2 0
+m4 m4-0.tar.bz2 0
 make make-0.tar.bz2 0
 man man-0.tar.bz2 0
 minires minires-0.tar.bz2 0
@@ -78,8 +78,8 @@ openssh openssh-0.tar.bz2 0
 openssl openssl-0.tar.bz2 0
 p7zip p7zip-0.tar.bz2 0
 patch patch-0.tar.bz2 0
-python python-0.tar.bz2 0
 procps procps-0.tar.bz2 0
+python python-0.tar.bz2 0
 rebase rebase-0.tar.bz2 0
 rsync rsync-0.tar.bz2 0
 run run-0.tar.bz2 0
