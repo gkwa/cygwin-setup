@@ -113,10 +113,6 @@ SectionEnd
 Section "Section Name 1" Section1
 
 	SetOutPath $TEMP\cygwin-setup
-	File add_reboot_icon_to_quicklaunch_bar\add_reboot_icon_to_quicklaunch_bar.exe
-	nsExec::Exec add_reboot_icon_to_quicklaunch_bar.exe
-
-	SetOutPath $TEMP\cygwin-setup
 	# for debug
 	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	IntCmp $0 1 0 +5
@@ -437,6 +433,20 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c home_current_user.bat'
 	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
 	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c add_path_to_home_bin.bat'
+
+SectionEnd
+
+Section -last_install section_last_install
+
+	; Keep add_reboot_icon_to_quicklaunch_bar.exe running last because it
+	; looks for hard coded paths to shortcuts to pin to the quicklaunch bar
+	; and taskbar.  If those shortcuts don't exist before running
+	; add_reboot_icon_to_quicklaunch_bar.exe, then it cant create these
+	; quicklaunch and taskbar shortcuts.
+
+	SetOutPath $TEMP\cygwin-setup
+	File add_reboot_icon_to_quicklaunch_bar\add_reboot_icon_to_quicklaunch_bar.exe
+	nsExec::Exec add_reboot_icon_to_quicklaunch_bar.exe
 
 SectionEnd
 
