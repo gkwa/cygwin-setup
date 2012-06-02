@@ -394,7 +394,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		@echo on$\r$\n\
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
-		"$0\bin\pathman.exe" /au "%systemdrive%\cygwin\bin"$\r$\n\
+		"$0\bin\setx.exe" PATH "%systemdrive%\cygwin\bin;%PATH%"$\r$\n\
 	'
 	FileClose $R1
 
@@ -403,7 +403,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		@echo on$\r$\n\
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
-		"$0\bin\pathman.exe" /au "$0\bin"$\r$\n\
+		"$0\bin\setx.exe" PATH "$0\bin;%PATH%"$\r$\n\
 	'
 	FileClose $R1
 
