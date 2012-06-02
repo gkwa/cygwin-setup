@@ -376,18 +376,18 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
 	FileWrite $R1 '\
 	@echo on$\r$\n\
-	if exist \\10.0.2.10\taylor.monacelli\o.zip ($\r$\n\
-		$TEMP\cygwin-setup\robocopy \\10.0.2.10\taylor.monacelli $TEMP\cygwin-setup o.zip /r:5 /w:3$\r$\n\
+		if exist \\10.0.2.10\taylor.monacelli\o.zip ($\r$\n\
+			$TEMP\cygwin-setup\robocopy \\10.0.2.10\taylor.monacelli $TEMP\cygwin-setup o.zip /r:5 /w:3$\r$\n\
+			$\r$\n\
+		) else ($\r$\n\
+			$TEMP\cygwin-setup\wget.exe ^$\r$\n\
+			--no-clobber ^$\r$\n\
+			--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
+			http://69.90.235.86/o.zip$\r$\n\
+			cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/taylor.monacelli o.zip /r:5 /w:3$\r$\n\
+		)$\r$\n\
 		$\r$\n\
-	) else ($\r$\n\
-		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
-		--no-clobber ^$\r$\n\
-		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-		http://69.90.235.86/o.zip$\r$\n\
-		cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/taylor.monacelli o.zip /r:5 /w:3$\r$\n\
-	)$\r$\n\
-	$\r$\n\
-	$TEMP\cygwin-setup\7za.exe x -y -o"$0" $TEMP\cygwin-setup\o.zip$\r$\n\
+		$TEMP\cygwin-setup\7za.exe x -y -o"$0" $TEMP\cygwin-setup\o.zip$\r$\n\
 	'
 	FileClose $R1
 	exec '"$SYSDIR\cmd.exe" /c $TEMP\cygwin-setup\taylor-specific-setup.bat'
