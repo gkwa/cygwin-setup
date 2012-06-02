@@ -371,7 +371,47 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	# $sysdrive\cygwin\home\%USERNAME%
 
 	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
-	CreateDirectory $0 # c:\cygwin\home\Administrator (for example)
+
+	DetailPrint "Create ~/bin"
+	SetOutPath '$0\bin'
+	File pathman.exe
+	File setx.exe
+	File robocopy.exe
+
+	SetOutPath '$0' # c:\cygwin\home\Administrator (for example)
+
+	FileOpen $R1 home_current_user.bat w
+	FileWrite $R1 '\
+		@echo on$\r$\n\
+		REM -*- bat -*-$\r$\n\
+		$\r$\n\
+		set setx=$0\bin\setx.exe$\r$\n\
+		set homedir=%systemdrive%\cygwin\home\%USERNAME%$\r$\n\
+		$\r$\n\
+		"%setx%" HOME "%homedir%"$\r$\n\
+		"%setx%" HOMEPATH "%homedir%"$\r$\n\
+	'
+	FileClose $R1
+
+	FileOpen $R1 add_path_to_cygwin.bat w
+	FileWrite $R1 '\
+		@echo on$\r$\n\
+		REM -*- bat -*-$\r$\n\
+		$\r$\n\
+		"$0\bin\pathman.exe" /au "%systemdrive%\cygwin\bin"$\r$\n\
+	'
+	FileClose $R1
+
+	FileOpen $R1 add_path_to_home_bin.bat w
+	FileWrite $R1 '\
+		@echo on$\r$\n\
+		REM -*- bat -*-$\r$\n\
+		$\r$\n\
+		"$0\bin\pathman.exe" /au "$0\bin"$\r$\n\
+	'
+	FileClose $R1
+
+	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
 
 	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
 	FileWrite $R1 '\
@@ -391,6 +431,12 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	'
 	FileClose $R1
 	exec '"$SYSDIR\cmd.exe" /c $TEMP\cygwin-setup\taylor-specific-setup.bat'
+
+	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	SetOutPath '$0'
+	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c home_current_user.bat'
+	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
+	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c add_path_to_home_bin.bat'
 
 SectionEnd
 

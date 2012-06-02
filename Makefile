@@ -17,7 +17,6 @@ $(i): \
 	$(basename).nsi \
 	bginfo.bgi \
 	cygwinsetup.nsi \
-	home-administrator.bat \
 	home-pull.sh \
 	installed.db \
 	add_reboot_icon_to_quicklaunch_bar.exe \
