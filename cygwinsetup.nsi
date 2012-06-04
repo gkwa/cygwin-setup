@@ -473,10 +473,10 @@ SectionEnd
 LangString DESC_Section1 ${LANG_ENGLISH} "Description of section 1."
 LangString DESC_Section2 ${LANG_ENGLISH} "Description of section 2."
 
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-	!insertmacro MUI_DESCRIPTION_TEXT ${Section1} $(DESC_Section1)
-	!insertmacro MUI_DESCRIPTION_TEXT ${Section2} $(DESC_Section2)
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
+# !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+# 	!insertmacro MUI_DESCRIPTION_TEXT ${Section1} $(DESC_Section1)
+# 	!insertmacro MUI_DESCRIPTION_TEXT ${Section2} $(DESC_Section2)
+# !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 # Emacs vars
 # Local Variables: ***
