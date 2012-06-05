@@ -30,7 +30,7 @@ add_reboot_icon_to_quicklaunch_bar.exe:
 
 
 upload: $(outfile) $(changelog)
-	-robocopy . //10.0.2.10/Production/Streambox/StreamboxLive/Server $^
+	-robocopy . //10.0.2.10/taylor.monacelli $^
 
 changelog: $(changelog)
 $(changelog):
