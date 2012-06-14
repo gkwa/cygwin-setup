@@ -436,6 +436,12 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 SectionEnd
 
+Section -chere section_chere
+	; Adds explorer context menu to open bash to current folder
+	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
+	nsExec::ExecToStack '"$0\bin\chere.exe" -i -n -t mintty -e "Bash prompt here"'
+SectionEnd
+
 Section -last_install section_last_install
 
 	; Keep add_reboot_icon_to_quicklaunch_bar.exe running last because it
