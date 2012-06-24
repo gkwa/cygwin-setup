@@ -430,9 +430,9 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
 	SetOutPath '$0'
-	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c home_current_user.bat'
-	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
-	nsExec::ExecToStack '"$SYSDIR\cmd.exe" /c add_path_to_home_bin.bat'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c home_current_user.bat'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_home_bin.bat'
 
 SectionEnd
 
