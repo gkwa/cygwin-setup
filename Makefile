@@ -36,8 +36,8 @@ $(changelog):
 
 
 upload: $(i) $(changelog)
-	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $(i) $(changelog)
-	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $(i) $(changelog)
+	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $^
+	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $^
 
 run: $(i)
 	cmd /c $(i)
