@@ -28,10 +28,6 @@ $(i): \
 add_reboot_icon_to_quicklaunch_bar.exe:
 	$(MAKE) -C add_reboot_icon_to_quicklaunch_bar installer=add_reboot_icon_to_quicklaunch_bar.exe
 
-
-upload: $(outfile) $(changelog)
-	-robocopy . //10.0.2.10/taylor.monacelli $^
-
 changelog: $(changelog)
 $(changelog):
 	git log --abbrev-commit --stat > $@
