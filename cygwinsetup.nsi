@@ -12,7 +12,7 @@ ShowUninstDetails show
 RequestExecutionLevel admin
 Caption "Streambox $(^Name) Installer"
 
-!define emacs-version 24.1
+!define emacs-version 24.2
 !define emacs-zip emacs-${emacs-version}-bin-i386.zip
 !define msysgit-installer PortableGit-1.7.10-preview20120409.7z
 
