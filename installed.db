@@ -91,6 +91,7 @@ screen screen-0.tar.bz2 0
 sed sed-0.tar.bz2 0
 smartmontools smartmontools-0.tar.bz2 0
 ssmtp ssmtp-0.tar.bz2 0
+stow stow-0.tar.bz2 0
 stunnel stunnel-0.tar.bz2 0
 syslog-ng syslog-ng-0.tar.bz2 0
 tar tar-0.tar.bz2 0
