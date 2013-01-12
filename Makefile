@@ -22,6 +22,7 @@ $(i): \
 	add_reboot_icon_to_quicklaunch_bar.exe \
 	Makefile
 	$(MAKENSIS) \
+		/V2 \
 		/Doutfile=$(installer) \
 		$(basename).nsi
 
