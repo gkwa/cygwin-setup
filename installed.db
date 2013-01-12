@@ -104,6 +104,7 @@ units units-0.tar.bz2 0
 unzip unzip-0.tar.bz2 0
 wget wget-0.tar.bz2 0
 which which-0.tar.bz2 0
+xmlstarlet xmlstarlet-*.tar.bz2 0
 zip zip-0.tar.bz2 0
 zlib zlib-0.tar.bz2 0
 _update-info-dir _update-info-dir-0.tar.bz2 0
