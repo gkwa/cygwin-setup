@@ -388,6 +388,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		reg query hkcu\environment /v HOME$\r$\n\
 		"%setx%" HOMEPATH "%homedir%"$\r$\n\
 		reg query hkcu\environment /v HOMEPATH$\r$\n\
+		pause$\r$\n\
 	'
 	FileClose $R1
 
@@ -398,6 +399,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		$\r$\n\
 		"$0\bin\setx.exe" PATH "%systemdrive%\cygwin\bin;%PATH%"$\r$\n\
 		reg query hkcu\environment /v PATH$\r$\n\
+		pause$\r$\n\
 	'
 	FileClose $R1
 
@@ -408,6 +410,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		$\r$\n\
 		"$0\bin\setx.exe" PATH "$0\bin;%PATH%"$\r$\n\
 		reg query hkcu\environment /v PATH$\r$\n\
+		pause$\r$\n\
 	'
 	FileClose $R1
 
