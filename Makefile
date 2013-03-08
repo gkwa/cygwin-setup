@@ -31,7 +31,7 @@ add_reboot_icon_to_quicklaunch_bar.exe:
 
 changelog: $(changelog)
 $(changelog):
-	git log --abbrev-commit --stat > $@
+	git log -m --abbrev-commit --pretty=tformat:'%h %ad %s' --date=short > $@
 	unix2dos $@
 .PHONY: $(changelog)
 
