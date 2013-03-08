@@ -435,6 +435,25 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	FileClose $R1
 	exec '"$SYSDIR\cmd.exe" /c $TEMP\cygwin-setup\taylor-specific-setup.bat'
 
+	##############################
+	# patch emacs
+	##############################
+	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	SetOutPath '$0'
+	File .emacs.windows.patch
+
+	FileOpen $R1 '$0\emacs_patch.bat' w
+	FileWrite $R1 '\
+		@echo on$\r$\n\
+		set PATH=%systemdrive%\cygwin\bin;%PATH%$\r$\n\
+		patch -p1 .emacs .emacs.windows.patch$\r$\n\
+	'
+	FileClose $R1
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c emacs_patch.bat'
+
+	; end patch
+	##############################
+
 	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
 	SetOutPath '$0'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c home_current_user.bat'

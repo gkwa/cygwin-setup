@@ -1,0 +1,24 @@
+--- .emacs.orig_from_installer	2012-05-07 14:19:40.000000000 -0700
++++ .emacs	2013-03-07 16:38:35.797851500 -0800
+@@ -221,8 +221,8 @@
+     (progn
+       (setq explicit-shell-file-name "c:/cygwin/bin/bash.exe")
+ ;;      (add-to-list 'Info-directory-list "c:/cygwin/usr/share/info")
+-      (require 'cygwin-mount)
+-      (cygwin-mount-activate)
++;      (require 'cygwin-mount)
++;      (cygwin-mount-activate)
+ 
+       ; http://blogs.law.harvard.edu/hoanga/2008/04/10/fixing-that-really-irritating-perl-warning-setting-locale-failed-on/
+       ; this error happens in emacs subshells when using 'git commit' unless you have set LC_ALL and LC_CTYPE.
+@@ -406,7 +406,9 @@
+ (require 'server)
+ (when (and (eq window-system 'w32) (file-exists-p (getenv "APPDATA")))
+   (setq server-auth-dir (concat (getenv "APPDATA") "/.emacs.d/server"))
+-  (make-directory server-auth-dir))
++  (setq parent-server-auth-dir (concat (getenv "APPDATA") "/.emacs.d"))
++  (if (not (file-directory-p server-auth-dir))
++      (make-directory server-auth-dir t)))
+ 
+ ;; --------------------------------------------------
+ ;; given some path such as  \\10.0.2.10\Production\Streambox\...\StreamboxOSX3.72b32.zip
