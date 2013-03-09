@@ -47,5 +47,8 @@ clean:
 	-rm -f \
 		$(installer) \
 		$(i) \
-		$(changelog)
+		$(changelog) \
+		cygwinsetup_v*.exe-changelog.txt \
+		cygwinsetup_v*.exe
+
 	$(MAKE) -C add_reboot_icon_to_quicklaunch_bar installer=add_reboot_icon_to_quicklaunch_bar.exe clean
