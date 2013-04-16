@@ -103,6 +103,7 @@ tidy tidy-0.tar.bz2 0
 tiff tiff-0.tar.bz2 0
 units units-0.tar.bz2 0
 unzip unzip-0.tar.bz2 0
+vim vim-*.tar.bz2 0
 wget wget-0.tar.bz2 0
 which which-0.tar.bz2 0
 xmlstarlet xmlstarlet-*.tar.bz2 0
