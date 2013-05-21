@@ -312,7 +312,8 @@ Section "Section Name 1" Section1
 			--no-desktop \
 			--local-package-dir $sysdrive\cygwin\packages \
 			--quiet-mode \
-			--site http://cygwin.mirrors.pair.com'
+			--site http://cygwin.osuosl.org\
+		'
 		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
 			exec '"cmd" /c start $TEMP\cygwin-setup\robocopy \
 				$sysdrive\cygwin\packages \
