@@ -1,0 +1,126 @@
+<title>TinyPerl 2.0</title>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
+<p><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://tinyperl.sf.net"><img src="tinylogo.gif" width="192" height="78" border="0"></a><br>
+Version: 2.0 v5.8.0</font></p>
+<ul>
+<li><font size="2" face="Arial, Helvetica, sans-serif"><a href="#1">Architecture</a></font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif"><a href="#2">Features</a></font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif"><a href="#3">Generating Binarys</a></font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif"><a href="#4">Links</a></font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif"><a href="#5">Copyright &amp; Licence</a></font></li>
+</ul>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr>
+<td bgcolor="#C7D5DE"><font size="4" face="Arial, Helvetica, sans-serif"><img src="tinylogo2.gif" width="22" height="23"><a name="1"></a>Architecture</font></td>
+</tr>
+</table>
+<p><font size="2" face="Arial, Helvetica, sans-serif">TinyPerl use a set of &quot;magics&quot; to make it compact. All the binarys 
+(dll,so,exe) are compressed with UPX and the Lib (./lib directory) stay compressed inside a lib.zip file. To use the lib.zip file 
+the module LibZip was used. The advantage of the LibZip compared to other similar modules, like PAR, is the independence and size. 
+The files of LibZip stay appended inside the executable and the XS of Compress::Zlib, needed to uncompress the files, was compiled 
+statically inside PerlLib (Perl58.dll), avoiding extra files.</font></p>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr> 
+<td bgcolor="#C7D5DE"><font size="4" face="Arial, Helvetica, sans-serif"><img src="tinylogo2.gif" width="22" height="23"><a name="2" id="2"></a>Features</font></td>
+</tr>
+</table>
+<p><font size="2" face="Arial, Helvetica, sans-serif">Features</font></p>
+<ul>
+<li><font size="2" face="Arial, Helvetica, sans-serif">Modules:<br>
+It comes only with the basics to run, this means: Carp, Dynaloader, Exporter, IO, PerlIO, Socket, strict, utf8, vars, warnings, XSloader... 
+(see inside lib.zip)<br>
+<br>
+</font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif">XS:<br>
+Enabled from version 1.1 of LibZip. When a module that uses XS files are loaded all the content of lib.zip/lib/auto/FOO is extracted 
+to ./libzip-tmp directory.<br>
+<br>
+</font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif">lib.zip and ./lib<br>
+You can use the both ways, lib.zip file and ./lib directory, in the same time.<br>
+<br>
+</font></li>
+<li><font size="2" face="Arial, Helvetica, sans-serif">libzip-tmp<br>
+This is the directory where temporary files of LibZip are extracted. When TinyPerl goes out it cleans the directory (except files 
+that are used in the moment). If 2 TinyPerl are running in the same time they will share the extracted files, saving load time.<br>
+</font></li>
+</ul>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr>
+<td bgcolor="#C7D5DE"><font size="4" face="Arial, Helvetica, sans-serif"><img src="tinylogo2.gif" width="22" height="23"><a name="3" id="3"></a>Generating 
+Binarys</font></td>
+</tr>
+</table>
+<p><font size="4" face="Arial, Helvetica, sans-serif"><br>
+</font><font size="2" face="Arial, Helvetica, sans-serif">Well, TinyPerl is small and malleable, making a good tool for publishing. 
+From the version 2.0 TinyPerl can get your script.pl and turn it into a binary (script.exe). To do that type:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&gt; <font color="#006600">tinyperl -bin script.pl script.exe</font></font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">You can create non console executables too, just use the option -g</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&gt; <font color="#009900">tinyperl -bin -g script.pl 
+script.exe</font></font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">You can create your own lib.zip file, just get a normal ./lib directory (from 
+the same version of TinyPerl - 5.8.0), cut off what you don't need, and compress the directory. It will need to have the same path 
+structure of the original lib.zip, with lib/ as root (see inside it).</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">See the -bin option for more.<br>
+<br>
+No more comments, since the idea is simple, but useful. ;-P</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">Take a look in the project <a href="http://perlbin.sf.net" target="_blank">PerlBin</a>.<br>
+</font></p>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr> 
+<td bgcolor="#C7D5DE"><font size="4" face="Arial, Helvetica, sans-serif"><img src="tinylogo2.gif" width="22" height="23"><a name="4" id="4"></a>Links</font></td>
+</tr>
+</table>
+<p><font size="2" face="Arial, Helvetica, sans-serif">Some interesting links:</font></p>
+<table width="533" border="0" cellspacing="0" cellpadding="2">
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">TinyPerl Home</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://tinyperl.sf.net">http://tinyperl.sf.net</a></font></td>
+</tr>
+<tr> 
+<td width="142"><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">UPX</font></strong></div></td>
+<td width="383"><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://upx.sf.net">http://upx.sf.net</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">HWX</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://hwx.sf.net">http://hwx.sf.net</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">PerlBin</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://perlbin.sf.net">http://perlbin.sf.net</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">wxPerl</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://wxperl.sf.net">http://wxperl.sf.net</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">PerlMonks</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://www.perlmonks.com">http://www.perlmonks.com</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">CPAN</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://search.cpan.org">http://search.cpan.org</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">SourceForge</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://sf.net">http://sf.net</a></font></td>
+</tr>
+<tr> 
+<td><div align="center"><strong><font size="2" face="Arial, Helvetica, sans-serif">My CPAN modules</font></strong></div></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://www.cpan.org/authors/id/G/GM/GMPASSOS/">http://www.cpan.org/authors/id/G/GM/GMPASSOS/</a></font></td>
+</tr>
+</table>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr> 
+<td bgcolor="#C7D5DE"><font size="4" face="Arial, Helvetica, sans-serif"><img src="tinylogo2.gif" width="22" height="23"><a name="5"></a>Copyright 
+&amp; Licence</font></td>
+</tr>
+</table>
+<p><font size="2" face="Arial, Helvetica, sans-serif">Copyright (C) 2003 Graciliano M. P. &lt;gm[at]virtuasites.com.br&gt;</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">This program is free software; you can redistribute it and/or<br>
+modify it under the same terms as Perl itself.</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">Enjoy ;-p<br>
+and send your feedback!</font></p>
+<p>&nbsp;</p>

@@ -1,0 +1,21 @@
+Revision history for TinyPerl
+   
+2.0  Sat Jan 4 06:11:30 2002
+   - The LibZip module now stay inside tinyperl.exe and Perl was build
+     with the XS of Compress::Zlib inside. Now we don't need the little
+     directory ./lib! ;-P
+   - TinyPerl can generate binarys (executables) for your script,
+     Type -bin for more!
+
+1.1  Sat Dec 28 20:25:01 2002
+   * Just some minor adjustments:
+     - Cut off all the POD of files inside lib.zip using Pod::Stripper.
+     - UPX files inside lib.zip file.
+     - Fix some Config.pm "flexible" variables.
+   
+1.0  Wed Dec 11 01:52:01 2002
+   - Released the 1st version!
+
+
+Enjoy! :-P
+
