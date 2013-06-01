@@ -1,3 +1,0 @@
-[submodule "add_reboot_icon_to_quicklaunch_bar"]
-	path = add_reboot_icon_to_quicklaunch_bar
-	url = ssh://boxstream@development.streambox.com:5979/var/www/html/proj/add_reboot_icon_to_quicklaunch_bar.git
