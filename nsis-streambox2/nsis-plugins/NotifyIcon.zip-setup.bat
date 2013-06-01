@@ -10,10 +10,9 @@ mkdir "%stage%"
 
 set pf=%ProgramFiles%
 if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
-cd "%pf%\NSIS"
+%SystemDrive% && cd "%pf%\NSIS"
 
 if exist Plugins\nul ( %r% "%stage%" "%pf%\NSIS" /e /s )
 if exist Unicode\nul ( %r% "%stage%" "%pf%\NSIS\Unicode" /e /s )
 
 rmdir /q/s "%stage%"
-

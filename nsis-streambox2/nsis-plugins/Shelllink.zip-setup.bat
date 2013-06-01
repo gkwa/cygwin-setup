@@ -1,9 +1,10 @@
 REM -*- bat -*-
 @Echo on
 
-set plugin=Md5dll
+set plugin=Shelllink
 set zip=%plugin%.zip
 set stage=%cd%\%zip%-odXihBhRVpA4
+set r=%cd%\..\robocopy.exe
 
 mkdir "%stage%"
 .\unzip -q -n "%zip%" -d "%stage%"
@@ -12,12 +13,7 @@ set pf=%ProgramFiles%
 if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
 %SystemDrive% && cd "%pf%\NSIS"
 
-if exist Unicode\Plugins\nul (
-	copy /y "%stage%\md5dll\UNICODE\md5dll.dll" "%pf%\NSIS\Unicode\Plugins"
-)
-
-if exist Plugins\nul (
-	copy /y "%stage%\md5dll\ANSI\md5dll.dll" "%pf%\NSIS\Plugins"
-)
+if exist Plugins\nul ( %r% "%stage%" "%pf%\NSIS" /e /s )
+if exist Unicode\nul ( %r% "%stage%" "%pf%\NSIS\Unicode" /e /s )
 
 rmdir /q/s "%stage%"

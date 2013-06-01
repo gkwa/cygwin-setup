@@ -10,7 +10,7 @@ mkdir "%stage%"
 
 set pf=%ProgramFiles%
 if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
-cd "%pf%\NSIS"
+%SystemDrive% && cd "%pf%\NSIS"
 
 if exist Unicode\Plugins\nul (
 	copy /y "%stage%\SimpleFC.dll" "%pf%\NSIS\Unicode\Plugins"

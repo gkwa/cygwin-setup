@@ -14,10 +14,16 @@ move "%stage%\Plugin" "%stage%\Plugins"
 
 set pf=%ProgramFiles%
 if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
-cd "%pf%\NSIS"
+%SystemDrive% && cd "%pf%\NSIS"
 
 if exist Plugins\nul ( %r% "%stage%" "%pf%\NSIS" /e /s )
-if exist Unicode\nul ( %r% "%stage%" "%pf%\NSIS\Unicode" /e /s )
+if exist Unicode\nul (
+   %r% "%stage%" "%pf%\NSIS\Unicode" /e /s
+   del /F "%pf%\NSIS\Unicode\Plugins\nsProcess.dll"
+   rem NSIS UNICODE support (just rename nsProcessW.dll into nsProcess.dll)
+   move "%pf%\NSIS\Unicode\Plugins\nsProcessW.dll" ^
+	"%pf%\NSIS\Unicode\Plugins\nsProcess.dll"
+)
 
 rmdir /q/s "%stage%"
 
@@ -44,7 +50,7 @@ REM     The process name is case-insensitive
 REM     Win95/98/ME/NT/2000/XP/Win7 support
 REM     Finds processes of other user(s) when running 'as Administrator' or when having switched to another user
 REM     Small plugin size (4 Kb)
-REM     NSIS UNICODE support (just rename nsProcessW.dll into nsProcess.dll) 
+REM     NSIS UNICODE support (just rename nsProcessW.dll into nsProcess.dll)
 
 REM [edit] Thanks
 

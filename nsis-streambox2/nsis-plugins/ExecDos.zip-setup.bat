@@ -11,7 +11,7 @@ mkdir "%stage%"
 
 set pf=%ProgramFiles%
 if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
-cd "%pf%\NSIS"
+%SystemDrive% && cd "%pf%\NSIS"
 
 if exist Plugins\nul (
 	copy /y "%stage%\Plugins\execDos.dll" "%pf%\NSIS\Plugins"
@@ -28,4 +28,3 @@ if exist Unicode\nul (
 )
 
 rmdir /q/s "%stage%"
-

@@ -3,7 +3,11 @@
 
 ; refresh the system tray icons
 
-_RefreshSystemTray(1000)
+Global $i
+
+For $i = 1 To 10 Step 1
+        _RefreshSystemTray(1000)
+Next
 
 ; ===================================================================
 ; _RefreshSystemTray($nDealy = 1000)

@@ -9,8 +9,8 @@ mkdir "%stage%"
 .\unzip -q -n "%zip%" -d "%stage%"
 
 set pf=%ProgramFiles%
-if not "%ProgramFiles(x86)%"=="" set pf=ProgramFiles(x86)
-cd "%pf%\NSIS"
+if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
+%SystemDrive% && cd "%pf%\NSIS"
 
 if exist Unicode\Plugins\nul (
 	copy /y "%stage%\NSISpcre.dll" "Unicode\Plugins"

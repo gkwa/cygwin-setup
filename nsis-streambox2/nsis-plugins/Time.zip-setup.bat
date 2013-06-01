@@ -11,7 +11,7 @@ mkdir "%stage%"
 
 set pf=%ProgramFiles%
 if not "%ProgramFiles(x86)%"=="" set pf=%ProgramFiles(x86)%
-cd "%pf%\NSIS"
+%SystemDrive% && cd "%pf%\NSIS"
 
 if exist Unicode\Include\nul (
 	copy /y "%stage%\Include\Time.nsh" "%pf%\NSIS\Unicode\Include"
@@ -32,4 +32,3 @@ if exist Plugins\nul (
 )
 
 rmdir /q/s "%stage%"
-
