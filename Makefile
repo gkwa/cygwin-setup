@@ -19,6 +19,7 @@ MAKENSIS_SW =
 ifneq ($(findstring $(MAKEFLAGS),s),s)
 ifndef V
 	QUIET_MAKE = @echo '   ' MAKE $@;
+	QUIET_PERL = @echo '   ' TINYPERL $@;
 	QUIET_MAKENSIS = @echo '   ' MAKENSIS $@;
 	QUIET_GEN      = @echo '   ' GEN $@;
 	MAKENSIS_SW += /V2
@@ -32,6 +33,7 @@ endif
 
 MAKENSIS_SW += /Doutfile=$(installer)
 
+$(installer): configure_fstab.exe
 $(installer): bginfo.bgi
 $(installer): cygwinsetup.nsi
 $(installer): home-pull.sh
@@ -40,6 +42,9 @@ $(installer): add_reboot_icon_to_quicklaunch_bar.exe
 $(installer): Makefile
 $(installer): $(basename).nsi
 	$(QUIET_MAKENSIS)$(MAKENSIS) $(MAKENSIS_SW) $<
+
+configure_fstab.exe: configure_fstab.pl
+	$(QUIET_PERL)tiny_perl_installer/tinyperl.exe -bin configure_fstab.pl $@ >/dev/null
 
 add_reboot_icon_to_quicklaunch_bar.exe:
 	$(QUIET_MAKE)$(MAKE) $(PRINT_DIR) -C add_reboot_icon_to_quicklaunch_bar installer=$@
@@ -59,6 +64,7 @@ run: $(installer)
 clean:
 	$(QUIET_MAKE)$(MAKE) -C add_reboot_icon_to_quicklaunch_bar \
 		installer=add_reboot_icon_to_quicklaunch_bar.exe clean
+	$(RM) configure_fstab.exe
 	$(RM) $(installer)
 	$(RM) $(changelog)
 	$(RM) cygwinsetup_v*.exe-changelog.txt

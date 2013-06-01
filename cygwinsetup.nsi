@@ -434,6 +434,16 @@ Section -chere section_chere
 	nsExec::ExecToStack '"$0\bin\chere.exe" -i -n -t mintty -e "Bash prompt here"'
 SectionEnd
 
+Section Configure_fstab section_configure_fstab
+	SetOutPath $TEMP\cygwin\setup
+	File tiny_perl_installer\perl58.dll
+	File tiny_perl_installer\lib.zip
+	File configure_fstab.exe
+
+	nsExec::ExecToStack '"configure_fstab.exe" "$sysdrive\cygwin\etc\fstab"'
+
+SectionEnd
+
 Section -last_install section_last_install
 
 	; Keep add_reboot_icon_to_quicklaunch_bar.exe running last because it
