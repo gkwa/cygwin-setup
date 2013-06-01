@@ -17,13 +17,13 @@ InstallDir '$PROGRAMFILES\Streambox\add_reboot_icon_to_quicklaunch_bar'
 #...butif this reg key exists, use this installdir instead of the above line
 InstallDirRegKey HKLM Software\Streambox\add_reboot_icon_to_quicklaunch_bar InstallDir
 
-!define LANG_ENGLISH 1033-English
-
-VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "EasyRebootOverRDP"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Create reboot batch file with link to taskbar"
-# VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "@Streambox"
-# VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Streambox"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${version}"
+VIAddVersionKey ProductName EasyRebootOverRDP
+VIAddVersionKey FileDescription "Create reboot batch file with link to taskbar"
+VIAddVersionKey Language "English"
+VIAddVersionKey LegalCopyright "@Streambox"
+VIAddVersionKey CompanyName "Streambox"
+VIAddVersionKey ProductVersion "${version}"
+VIAddVersionKey FileVersion "${version}"
 VIProductVersion "${version}"
 
 ;--------------------------------
@@ -36,7 +36,6 @@ VIProductVersion "${version}"
 # http://nsis.sourceforge.net/Docs/Chapter2.html#\2.3.6
 
 ;--------------------------------
-Var Dialog
 Var sysdrive
 
 ;--------------------------------
@@ -46,7 +45,6 @@ Var sysdrive
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
 !define MUI_HEADERIMAGE_BITMAP Windows-Restart-icon.bmp
-# !define MUI_WELCOMEFINISHPAGE_BITMAP Windows-Restart-icon.bmp
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP Windows-Restart-icon.bmp
 !define MUI_ABORTWARNING
 !define MUI_ICON Windows-Restart.ico
@@ -57,19 +55,12 @@ UninstallText "This will uninstall ${name}"
 ;Pages
 
 !insertmacro MUI_PAGE_WELCOME
-# !insertmacro MUI_PAGE_LICENSE nsis-streambox2\Docs\License.txt
-!insertmacro NSD_FUNCTION_INIFILE
-# !insertmacro MUI_PAGE_COMPONENTS
-# !insertmacro MUI_PAGE_DIRECTORY
-# Page custom nsDialogsPage nsDialogsPageLeave
 !insertmacro MUI_PAGE_INSTFILES # this macro is the macro that invokes the Sections
-# !insertmacro MUI_PAGE_FINISH
 
 !define MUI_WELCOMEPAGE_TITLE "Welcome to Streambox uninstall wizard."
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
-# !insertmacro MUI_UNPAGE_FINISH
 
 ;--------------------------------
 ; Languages
@@ -340,16 +331,6 @@ Section uninstall section_uninstall
 SectionEnd
 
 UninstallIcon Windows-Restart.ico
-
-;--------------------------------
-; this must remain after the Section definitions
-
-LangString DESC_section1 ${LANG_ENGLISH} "Description of section 1."
-LangString DESC_section2 ${LANG_ENGLISH} "Description of section 2."
-
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-	!insertmacro MUI_DESCRIPTION_TEXT ${section_section1} $(DESC_section1)
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 # Emacs vars
 # Local Variables: ***

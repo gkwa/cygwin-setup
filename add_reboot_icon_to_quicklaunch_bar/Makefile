@@ -1,28 +1,51 @@
+include VERSION.mk
+
 name=add_reboot_icon_to_quicklaunch_bar
 installer=$(name).exe
 
-testip=10.0.2.224
 
-include VERSION.mk
+MAKENSIS = makensis
+RM = rm -f
+7Z = 7za
+AUTOIT_TO_EXE = Aut2exe.exe
+
 version=$(majorv).$(minorv).$(microv).$(qualifierv)
 
-$(installer): \
-	$(name).nsi \
-	show_quick_launch_in_xp.exe \
-	force_reboot_now.exe \
-	PinItem\\PinItem.wsf \
-	PinItem\\PinItem.cmd
-	makensis \
-		/Doutfile=$(installer) \
-		/Dname="$(name)" \
-		/Dversion=$(version) \
-		$<
+MAKENSIS_INSTALLER_SW =
+MAKENSIS_FORCE_REBOOT_NOW_SW =
+ifneq ($(findstring $(MAKEFLAGS),s),s)
+ifndef V
+	QUIET_MAKENSIS = @echo '   ' MAKENSIS $@;
+	QUIET_7ZIP = @echo '   ' 7Z $@;
+	QUIET_AUTOIT_TO_EXE = @echo '   ' AUTOIT $@;
+	QUIET_GEN      = @echo '   ' GEN $@;
+	MAKENSIS_INSTALLER_SW += /V2
+	MAKENSIS_FORCE_REBOOT_NOW_SW += /V2
+	export V
+endif
+endif
+
+ifneq ($(findstring $(MAKEFLAGS),w),w)
+	PRINT_DIR = --no-print-directory
+endif
+
+MAKENSIS_INSTALLER_SW += /Doutfile=$(installer)
+MAKENSIS_INSTALLER_SW += /Dname="$(name)"
+MAKENSIS_INSTALLER_SW += /Dversion=$(version)
+
+$(installer): Makefile
+$(installer): show_quick_launch_in_xp.exe
+$(installer): force_reboot_now.exe
+$(installer): PinItem\\PinItem.wsf
+$(installer): PinItem\\PinItem.cmd
+$(installer): $(name).nsi
+	$(QUIET_MAKENSIS)$(MAKENSIS) $(MAKENSIS_INSTALLER_SW) $<
 
 show_quick_launch_in_xp.exe: show_quick_launch_in_xp.au3
-	Aut2exe.exe /in $< /out $@ /icon Windows-Restart.ico
+	$(QUIET_AUTOIT_TO_EXE)$(AUTOIT_TO_EXE) /in $< /out $@ /icon Windows-Restart.ico >/dev/null
 
-PinItem\\PinItem.wsf:
-	7za x -y -oPinItem PinItem.zip
+PinItem\\PinItem.cmd PinItem\\PinItem.wsf:
+	$(QUIET_7ZIP)$(7Z) x -y -oPinItem PinItem.zip >/dev/null
 
 # http://technet.microsoft.com/en-us/solutionaccelerators/dd407791
 # http://go.microsoft.com/fwlink/?LinkId=163307
@@ -35,50 +58,44 @@ ZTIUtility.vbs:
 checkupdate_pinitem:
 	wget http://blogs.technet.com/cfs-file.ashx/__key/communityserver-components-postattachments/00-03-22-36-81/PinItem.zip
 
+MAKENSIS_FORCE_REBOOT_NOW_SW += /Dname=force_reboot_now
+MAKENSIS_FORCE_REBOOT_NOW_SW += /Doutfile="$@"
+
 force_reboot_now.exe: force_reboot_now.nsi
-	makensis \
-		/Dname=force_reboot_now \
-		/Doutfile="$@" \
-		$<
+	$(QUIET_MAKENSIS)$(MAKENSIS) $(MAKENSIS_FORCE_REBOOT_NOW_SW) $<
 
 upload: $(installer)
 	-robocopy . //10.0.2.10/taylor.monacelli $(installer)
-.PHONY: upload
 
 test: $(installer)
 	cmd /c $(installer)
-.PHONY: test
 
 un: uninstall
-.PHONY: un
 uninstall: Uninstall.bat
 	cmd /c Uninstall.bat
-.PHONY: uninstall
 
 si: silent_install
-.PHONY: si
 silent_install: $(installer)
 	cmd /c $(installer) /S
-.PHONY: silent_install
-
 
 Uninstall.bat: Uninstall.bat Makefile
 	echo '@echo on' > $@
 	echo 'cd "%PROGRAMFILES%\Streambox\${name}"' >> $@
 	echo '.\Uninstall.exe' >> $@
 
-test2: $(installer)
-	-robocopy . //10.0.2.224/t $(installer)
-.PHONY: test2
-
-
 clean:
-	rm -rf \
-		$(installer) \
-		PinItem \
-		MicrosoftDeploymentToolkit2012_x86.msi \
-		force_reboot_now.exe \
-		show_quick_launch_in_xp.exe \
-		Uninstall.bat
+	$(RM) $(installer)
+	$(RM) -r PinItem
+	$(RM) MicrosoftDeploymentToolkit2012_x86.msi
+	$(RM) force_reboot_now.exe
+	$(RM) show_quick_launch_in_xp.exe
+	$(RM) Uninstall.bat
 
 .PHONY: clean
+.PHONY: upload
+.PHONY: test
+.PHONY: un
+.PHONY: uninstall
+.PHONY: si
+.PHONY: silent_install
+.PHONY: test2

@@ -1,9 +1,11 @@
 basename=cygwinsetup
 
+RM = rm -f
+
+
 include VERSION.mk
 
 installer=$(basename)_v$(version).exe
-i=$(installer)
 
 # Must use unicode since it supports 2048 byte strings
 # fixme: a better method is to write out smaller strings to batch file
@@ -11,44 +13,53 @@ MAKENSIS=c:/Program\ Files/NSIS/Unicode/makensis.exe
 
 VPATH=add_reboot_icon_to_quicklaunch_bar
 
-changelog=$(i)-changelog.txt
+changelog=$(installer)-changelog.txt
 
-$(i): \
-	$(basename).nsi \
-	bginfo.bgi \
-	cygwinsetup.nsi \
-	home-pull.sh \
-	installed.db \
-	add_reboot_icon_to_quicklaunch_bar.exe \
-	Makefile
-	$(MAKENSIS) \
-		/V2 \
-		/Doutfile=$(installer) \
-		$(basename).nsi
+MAKENSIS_SW =
+ifneq ($(findstring $(MAKEFLAGS),s),s)
+ifndef V
+	QUIET_MAKE = @echo '   ' MAKE $@;
+	QUIET_MAKENSIS = @echo '   ' MAKENSIS $@;
+	QUIET_GEN      = @echo '   ' GEN $@;
+	MAKENSIS_SW += /V2
+	export V
+endif
+endif
+
+ifneq ($(findstring $(MAKEFLAGS),w),w)
+	PRINT_DIR = --no-print-directory
+endif
+
+MAKENSIS_SW += /Doutfile=$(installer)
+
+$(installer): bginfo.bgi
+$(installer): cygwinsetup.nsi
+$(installer): home-pull.sh
+$(installer): installed.db
+$(installer): add_reboot_icon_to_quicklaunch_bar.exe
+$(installer): Makefile
+$(installer): $(basename).nsi
+	$(QUIET_MAKENSIS)$(MAKENSIS) $(MAKENSIS_SW) $<
 
 add_reboot_icon_to_quicklaunch_bar.exe:
-	$(MAKE) -C add_reboot_icon_to_quicklaunch_bar installer=add_reboot_icon_to_quicklaunch_bar.exe
+	$(QUIET_MAKE)$(MAKE) $(PRINT_DIR) -C add_reboot_icon_to_quicklaunch_bar installer=$@
 
 changelog: $(changelog)
 $(changelog):
-	git log -m --abbrev-commit --pretty=tformat:'%h %ad %s' --date=short > $@
+	git log -m --abbrev-commit --pretty=tformat:'%h %ad %s' --date=short >$@
 	unix2dos $@
-.PHONY: $(changelog)
 
-
-upload: $(i) $(changelog)
+upload: $(installer) $(changelog)
 	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $^
 	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $^
 
-run: $(i)
-	cmd /c $(i)
+run: $(installer)
+	cmd /c $(installer)
 
 clean:
-	-rm -f \
-		$(installer) \
-		$(i) \
-		$(changelog) \
-		cygwinsetup_v*.exe-changelog.txt \
-		cygwinsetup_v*.exe
-
-	$(MAKE) -C add_reboot_icon_to_quicklaunch_bar installer=add_reboot_icon_to_quicklaunch_bar.exe clean
+	$(QUIET_MAKE)$(MAKE) -C add_reboot_icon_to_quicklaunch_bar \
+		installer=add_reboot_icon_to_quicklaunch_bar.exe clean
+	$(RM) $(installer)
+	$(RM) $(changelog)
+	$(RM) cygwinsetup_v*.exe-changelog.txt
+	$(RM) cygwinsetup_v*.exe

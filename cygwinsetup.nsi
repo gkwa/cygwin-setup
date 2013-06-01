@@ -26,7 +26,6 @@ Caption "Streambox $(^Name) Installer"
 # http://nsis.sourceforge.net/Docs/Chapter2.html#\2.3.6
 
 ;--------------------------------
-Var Dialog
 Var sysdrive
 
 ;--------------------------------
@@ -51,7 +50,6 @@ UninstallText "This will uninstall cygwin-setup"
 # !insertmacro MUI_PAGE_LICENSE nsis-streambox2\Docs\License.txt
 #!insertmacro NSD_FUNCTION_INIFILE
 #!insertmacro MUI_PAGE_COMPONENTS
-Page custom nsDialogsPage nsDialogsPageLeave
 !insertmacro MUI_PAGE_INSTFILES # this macro is the macro that invokes the Sections
 !insertmacro MUI_LANGUAGE "English"
 
@@ -73,42 +71,9 @@ Function .onInit
 FunctionEnd
 
 Function .onInstSuccess
-
 FunctionEnd
-
-
-Function nsDialogsPage
-	nsDialogs::Create 1018
-	Pop $Dialog
-
-	${If} $Dialog == error
-		Abort
-	${EndIf}
-
-	nsDialogs::Show
-
-FunctionEnd
-
-
-Function nsDialogsPageLeave
-
-FunctionEnd
-
-
-Function UN.onInit
-
-FunctionEnd
-
-
 
 UninstallIcon nsis-streambox2\Icons\Streambox_128.ico
-
-Section Uninstall
-
-	rmdir /r "$PROGRAMFILES\cygwin-setup"
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Streamboxcygwin-setup"
-SectionEnd
-
 
 Section "Section Name 1" Section1
 
