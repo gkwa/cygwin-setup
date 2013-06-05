@@ -33,6 +33,7 @@ endif
 
 MAKENSIS_SW += /Doutfile=$(installer)
 
+$(installer): sshd-auto-setup.cmd
 $(installer): configure_fstab.exe
 $(installer): bginfo.bgi
 $(installer): cygwinsetup.nsi

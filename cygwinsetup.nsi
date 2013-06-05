@@ -425,6 +425,8 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c home_current_user.bat'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_home_bin.bat'
+	File sshd-auto-setup.cmd
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c sshd-auto-setup.cmd'
 
 SectionEnd
 
