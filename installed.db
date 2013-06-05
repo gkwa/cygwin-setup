@@ -26,6 +26,7 @@ diffutils diffutils-0.tar.bz2 0
 editrights editrights-0.tar.bz2 0
 email email-*.tar.bz2 0
 expat expat-0.tar.bz2 0
+expect expect-*.tar.bz2 0
 findutils findutils-0.tar.bz2 0
 flip flip-0.tar.bz2 0
 gawk gawk-0.tar.bz2 0
