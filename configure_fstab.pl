@@ -7,7 +7,14 @@ open FILE, "<$input_file" or die "Couldn't open file $input_file: $!";
 $_ = <FILE>;
 close FILE;
 
+# If I'm running a second time, comment out my first run
 s{none / cygdrive binary 0 0}{}gmi;
+
+# comment out default
+s{^(none /cygdrive.*\r?\n)}{# $1}gmi;
+
+# running multiple times accumulates too many newlines
+s{\n\n\n*}{\n};
 
 $pre = <<END
 

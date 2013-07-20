@@ -55,6 +55,10 @@ $(changelog):
 	git log -m --abbrev-commit --pretty=tformat:'%h %ad %s' --date=short >$@
 	unix2dos $@
 
+fstab: test_fstab
+test_fstab:
+	perl -w configure_fstab.pl t/t1/fstab
+
 upload: $(installer) $(changelog)
 	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $^
 	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $^
@@ -70,3 +74,5 @@ clean:
 	$(RM) $(changelog)
 	$(RM) cygwinsetup_v*.exe-changelog.txt
 	$(RM) cygwinsetup_v*.exe
+
+.PHONY: test_fstab fstab
