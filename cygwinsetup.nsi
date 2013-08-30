@@ -2,6 +2,7 @@
 !include nsDialogs.nsh
 !include LogicLib.nsh
 !include FileFunc.nsh
+!include x64.nsh
 
 Name cygwinsetup
 OutFile ${outfile}
@@ -26,6 +27,7 @@ Caption "Streambox $(^Name) Installer"
 # http://nsis.sourceforge.net/Docs/Chapter2.html#\2.3.6
 
 ;--------------------------------
+var setup_exe
 Var sysdrive
 
 ;--------------------------------
@@ -68,6 +70,16 @@ Function .onInit
 	${IfNot} ${Errors}
 		WriteINIStr $TEMP\sbversions.ini cygwin-setup debug 1
 	${EndIf}
+
+	SetOutPath $TEMP\cygwin\setup
+	${If} ${RunningX64}
+		File setup-x86_64.exe
+		StrCpy $setup_exe setup-x86_64.exe
+	${Else}
+		File setup-x86.exe
+		StrCpy $setup_exe setup-x86.exe
+	${EndIf}
+
 FunctionEnd
 
 Function .onInstSuccess
@@ -218,27 +230,26 @@ Section "Section Name 1" Section1
 	##############################
 	# cygwin
 	##############################
-	IfFileExists $TEMP\cygwin-setup\setup.exe download_done 0
-		DetailPrint 'Downloading cygwin setup.exe'
+	IfFileExists $TEMP\cygwin-setup\$setup_exe download_done 0
+		DetailPrint 'Downloading cygwin $setup_exe'
 		nsExec::ExecToStack \
 			/timeout=10000 \
 			'$TEMP\cygwin-setup\wget.exe \
 			--no-clobber \
 			--directory-prefix=$TEMP\cygwin-setup \
-			http://cygwin.com/setup.exe'
+			http://www.cygwin.com/$setup_exe'
 		pop $0
 	download_done:
 
-	IfFileExists $TEMP\cygwin-setup\setup.exe +5
+	IfFileExists $TEMP\cygwin-setup\$setup_exe +5
 		DetailPrint 'Initiating manual download with default browser'
-		File setup.exe
 		nsExec::ExecToStack \
 			/timeout=10000 \
-			'cmd /c start /min http://cygwin.com/setup.exe'
+			'cmd /c start /min http://cygwin.com/$setup_exe'
 		pop $0
 
 	SetOutPath '$PROGRAMFILES\cygwininstall'
-	CopyFiles $TEMP\cygwin-setup\setup.exe \
+	CopyFiles $TEMP\cygwin-setup\$setup_exe \
 		'$PROGRAMFILES\cygwininstall'
 
 	SetOutPath $sysdrive\cygwin\etc\setup
@@ -268,11 +279,11 @@ Section "Section Name 1" Section1
 	${If} $0 < 5
 		nsExec::ExecToStack '"cmd" /c start /min $sysdrive\cygwin\packages'
 		pop $0
-		# cmd /c "%programfiles%\cygwinInstall\setup.exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site http://cygwin.mirrors.pair.com
+		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site http://cygwin.mirrors.pair.com
 		DetailPrint 'Downloading packages specified \
 			in $sysdrive\cygwin\etc\setup\installed.db'
 		ExecWait \
-			'$PROGRAMFILES\cygwinInstall\setup.exe \
+			'$PROGRAMFILES\cygwinInstall\$setup_exe \
 			--download \
 			--no-desktop \
 			--local-package-dir $sysdrive\cygwin\packages \
@@ -291,9 +302,9 @@ Section "Section Name 1" Section1
 
 	IfFileExists $sysdrive\cygwin\Cygwin.bat cygwin_install_done 0
 		DetailPrint 'Installing cygwin packages...'
-		# cmd /k "%programfiles%\cygwinInstall\setup.exe" --local-install --quiet-mode --local-package-dir c:\cygwin\packages
+		# cmd /k "%programfiles%\cygwinInstall\$setup_exe" --local-install --quiet-mode --local-package-dir c:\cygwin\packages
 		ExecWait \
-			'$PROGRAMFILES\cygwinInstall\setup.exe \
+			'$PROGRAMFILES\cygwinInstall\$setup_exe \
 			--local-install \
 			--no-shortcuts \
 			--quiet-mode \
