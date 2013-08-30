@@ -248,9 +248,9 @@ Section "Section Name 1" Section1
 			'cmd /c start /min http://cygwin.com/$setup_exe'
 		pop $0
 
-	SetOutPath '$PROGRAMFILES\cygwininstall'
+	SetOutPath '$PROGRAMFILES\cygwinInstall'
 	CopyFiles $TEMP\cygwin-setup\$setup_exe \
-		'$PROGRAMFILES\cygwininstall'
+		'$PROGRAMFILES\cygwinInstall'
 
 	SetOutPath $sysdrive\cygwin\etc\setup
 	SetOverwrite off
@@ -326,7 +326,7 @@ Section "Section Name 1" Section1
 		Delete "$QUICKLAUNCH\Bash.lnk"
 		CopyFiles $sysdrive\Cygwin\Cygwin2.lnk "$QUICKLAUNCH"
 
-		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwininstall"
+		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwinInstall"
 		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$sysdrive\Cygwin\home"
 	cygwin_install_done:
 
