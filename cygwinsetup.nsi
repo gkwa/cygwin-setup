@@ -248,6 +248,7 @@ Section "Section Name 1" Section1
 			'cmd /c start /min http://cygwin.com/$setup_exe'
 		pop $0
 
+	CreateDirectory '$PROGRAMFILES\cygwinInstall'
 	SetOutPath '$PROGRAMFILES\cygwinInstall'
 	CopyFiles $TEMP\cygwin-setup\$setup_exe \
 		'$PROGRAMFILES\cygwinInstall'
