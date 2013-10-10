@@ -61,7 +61,7 @@ test_fstab:
 
 upload: $(installer) $(changelog)
 	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $^
-	-robocopy . //10.0.2.10/taylor.monacelli /w:1 /r:1 $^
+	-robocopy . //10.0.2.10/users/taylor /w:1 /r:1 $^
 
 run: $(installer)
 	cmd /c $(installer)
