@@ -85,8 +85,6 @@ FunctionEnd
 Function .onInstSuccess
 FunctionEnd
 
-UninstallIcon nsis-streambox2\Icons\Streambox_128.ico
-
 Section "Section Name 1" Section1
 
 	SetOutPath $TEMP\cygwin-setup
