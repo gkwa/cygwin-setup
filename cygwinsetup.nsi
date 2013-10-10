@@ -29,6 +29,7 @@ Caption "Streambox $(^Name) Installer"
 ;--------------------------------
 var setup_exe
 Var sysdrive
+var cygwin_rootdir
 
 ;--------------------------------
 ;Interface Configuration
@@ -78,6 +79,11 @@ Function .onInit
 	${Else}
 		File setup-x86.exe
 		StrCpy $setup_exe setup-x86.exe
+	${EndIf}
+
+	StrCpy $cygwin_rootdir $sysdrive\cygwin
+	${If} ${RunningX64}
+		StrCpy $cygwin_rootdir $sysdrive\cygwin64
 	${EndIf}
 
 FunctionEnd
@@ -251,24 +257,24 @@ Section "Section Name 1" Section1
 	CopyFiles $TEMP\cygwin-setup\$setup_exe \
 		'$PROGRAMFILES\cygwinInstall'
 
-	SetOutPath $sysdrive\cygwin\etc\setup
+	SetOutPath $cygwin_rootdir\etc\setup
 	SetOverwrite off
 	File installed.db
 
 	##############################
 	#
 	##############################
-	CreateDirectory $sysdrive\cygwin\packages
+	CreateDirectory $cygwin_rootdir\packages
 	IfFileExists \\10.0.2.10\it\software\cygwin\packages 0 +2
 		nsExec::ExecToStack '$TEMP\cygwin-setup\robocopy \
 			//10.0.2.10/it/software/cygwin/packages \
-			$sysdrive\cygwin\packages \
+			$cygwin_rootdir\packages \
 			/xf setup.log \
 			/xf setup.log.full \
 			/r:5 /r:10 /w:30 /mir'
 
-	${GetSize} $sysdrive\cygwin\packages "/S=0M /G=1" $0 $1 $2
-	DetailPrint "$sysdrive\cygwin\packages has $0 MB"
+	${GetSize} $cygwin_rootdir\packages "/S=0M /G=1" $0 $1 $2
+	DetailPrint "$cygwin_rootdir\packages has $0 MB"
 	WriteINIStr $TEMP\sbversions.ini cygwin-setup packages_size_reminder \
 		"Size is in MB"
 	WriteINIStr $TEMP\sbversions.ini cygwin-setup packages_size $0
@@ -276,22 +282,22 @@ Section "Section Name 1" Section1
 
 	# 5MB
 	${If} $0 < 5
-		nsExec::ExecToStack '"cmd" /c start /min $sysdrive\cygwin\packages'
+		nsExec::ExecToStack '"cmd" /c start /min $cygwin_rootdir\packages'
 		pop $0
-		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir c:\cygwin\packages --quiet-mode --site http://cygwin.mirrors.pair.com
+		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir $cygwin_rootdir\packages --quiet-mode --site http://cygwin.mirrors.pair.com
 		DetailPrint 'Downloading packages specified \
-			in $sysdrive\cygwin\etc\setup\installed.db'
+			in $cygwin_rootdir\etc\setup\installed.db'
 		ExecWait \
 			'$PROGRAMFILES\cygwinInstall\$setup_exe \
 			--download \
 			--no-desktop \
-			--local-package-dir $sysdrive\cygwin\packages \
+			--local-package-dir $cygwin_rootdir\packages \
 			--quiet-mode \
 			--site http://cygwin.osuosl.org\
 		'
 		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
 			exec '"cmd" /c start $TEMP\cygwin-setup\robocopy \
-				$sysdrive\cygwin\packages \
+				$cygwin_rootdir\packages \
 				//10.0.2.10/it/software/cygwin/packages \
 				/xf setup.log \
 				/xf setup.log.full \
@@ -299,50 +305,49 @@ Section "Section Name 1" Section1
 	${EndIf}
 
 
-	IfFileExists $sysdrive\cygwin\Cygwin.bat cygwin_install_done 0
+	IfFileExists $cygwin_rootdir\Cygwin.bat cygwin_install_done 0
 		DetailPrint 'Installing cygwin packages...'
-		# cmd /k "%programfiles%\cygwinInstall\$setup_exe" --local-install --quiet-mode --local-package-dir c:\cygwin\packages
+		# cmd /k "%programfiles%\cygwinInstall\$setup_exe" --local-install --quiet-mode --local-package-dir $cygwin_rootdir\packages
 		ExecWait \
 			'$PROGRAMFILES\cygwinInstall\$setup_exe \
 			--local-install \
 			--no-shortcuts \
 			--quiet-mode \
-			--local-package-dir $sysdrive\cygwin\packages'
+			--local-package-dir $cygwin_rootdir\packages'
 
 		SetShellVarContext current
-		FileOpen $R1 $sysdrive\Cygwin\Cygwin2.bat w
+		FileOpen $R1 $cygwin_rootdir\Cygwin2.bat w
 		FileWrite $R1 "\
 			@echo off$\r$\n\
 			$sysdrive$\r$\n\
-			chdir $sysdrive\cygwin\bin$\r$\n\
+			chdir $cygwin_rootdir\bin$\r$\n\
 			start mintty -$\r$\n"
 		FileClose $R1
-		CreateShortCut "$sysdrive\Cygwin\Cygwin2.lnk" \
+		CreateShortCut "$cygwin_rootdir\Cygwin2.lnk" \
 			"$SYSDIR\cmd.exe" \
-			"/c $sysdrive\Cygwin\Cygwin2.bat" \
-			"$sysdrive\Cygwin\bin\mintty.exe"
+			"/c $cygwin_rootdir\Cygwin2.bat" \
+			"$cygwin_rootdir\bin\mintty.exe"
 
 		Delete "$QUICKLAUNCH\Bash.lnk"
-		CopyFiles $sysdrive\Cygwin\Cygwin2.lnk "$QUICKLAUNCH"
+		CopyFiles $cygwin_rootdir\Cygwin2.lnk "$QUICKLAUNCH"
 
 		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwinInstall"
-		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$sysdrive\Cygwin\home"
+		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$cygwin_rootdir\home"
 	cygwin_install_done:
 
-	# add c:\cygwin\bin to %path%
-	ReadRegStr $2 HKLM Software\Cygwin\setup rootdir
+	# add $cygwin_rootdir\bin to %path%
 	nsExec::ExecToStack \
-		'$TEMP\cygwin-setup\pathman /au $2\bin'
+		'$TEMP\cygwin-setup\pathman /au $cygwin_rootdir\bin'
 
 SectionEnd
 
 Section download_taylor_specific_settings section_download_taylor_specific_settings
 
-	# Create $sysdrive\cygwin\home\%USERNAME%, download
+	# Create $cygwin_rootdir\home\%USERNAME%, download
 	# http://69.90.235.86/o.zip and expand it into
-	# $sysdrive\cygwin\home\%USERNAME%
+	# $cygwin_rootdir\home\%USERNAME%
 
-	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
 
 	DetailPrint "Create ~/bin"
 	SetOutPath '$0\bin'
@@ -350,7 +355,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	File setx.exe
 	File robocopy.exe
 
-	SetOutPath '$0' # c:\cygwin\home\Administrator (for example)
+	SetOutPath '$0' # $cygwin_rootdir\home\Administrator (for example)
 
 	FileOpen $R1 home_current_user.bat w
 	FileWrite $R1 '\
@@ -358,7 +363,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
 		set setx=$0\bin\setx.exe$\r$\n\
-		set homedir=%systemdrive%\cygwin\home\%USERNAME%$\r$\n\
+		set homedir=$cygwin_rootdir\home\%USERNAME%$\r$\n\
 		$\r$\n\
 		"%setx%" HOME "%homedir%"$\r$\n\
 		reg query hkcu\environment /v HOME$\r$\n\
@@ -373,7 +378,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		@echo on$\r$\n\
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
-		"$0\bin\setx.exe" PATH "%systemdrive%\cygwin\bin;%PATH%"$\r$\n\
+		"$0\bin\setx.exe" PATH "$cygwin_rootdir\bin;%PATH%"$\r$\n\
 		reg query hkcu\environment /v PATH$\r$\n\
 		pause$\r$\n\
 	'
@@ -390,7 +395,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	'
 	FileClose $R1
 
-	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
 
 	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
 	FileWrite $R1 '\
@@ -414,14 +419,14 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	##############################
 	# patch emacs
 	##############################
-	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
 	SetOutPath '$0'
 	File .emacs.windows.patch
 
 	FileOpen $R1 '$0\emacs_patch.bat' w
 	FileWrite $R1 '\
 		@echo on$\r$\n\
-		set PATH=%systemdrive%\cygwin\bin;%PATH%$\r$\n\
+		set PATH=$cygwin_rootdir\bin;%PATH%$\r$\n\
 		patch -p1 .emacs .emacs.windows.patch$\r$\n\
 	'
 	FileClose $R1
@@ -430,7 +435,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	; end patch
 	##############################
 
-	ExpandEnvStrings $0 "$sysdrive\cygwin\home\%USERNAME%"
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
 	SetOutPath '$0'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c home_current_user.bat'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
@@ -452,7 +457,7 @@ Section Configure_fstab section_configure_fstab
 	File tiny_perl_installer\lib.zip
 	File configure_fstab.exe
 
-	nsExec::ExecToStack '"configure_fstab.exe" "$sysdrive\cygwin\etc\fstab"'
+	nsExec::ExecToStack '"configure_fstab.exe" "$cygwin_rootdir\etc\fstab"'
 
 SectionEnd
 
