@@ -430,18 +430,20 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		patch -p1 .emacs .emacs.windows.patch$\r$\n\
 	'
 	FileClose $R1
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c emacs_patch.bat'
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
+	SetOutPath '$0'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\emacs_patch.bat"'
 
 	; end patch
 	##############################
 
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
 	SetOutPath '$0'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_cygwin.bat'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c home_current_user.bat'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c add_path_to_home_bin.bat'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\add_path_to_cygwin.bat"'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\home_current_user.bat"'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\add_path_to_home_bin.bat"'
 	File sshd-auto-setup.cmd
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c sshd-auto-setup.cmd'
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\sshd-auto-setup.cmd"'
 
 SectionEnd
 
