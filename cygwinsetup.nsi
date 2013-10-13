@@ -417,6 +417,22 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	exec '"$SYSDIR\cmd.exe" /c $TEMP\cygwin-setup\taylor-specific-setup.bat'
 
 	##############################
+	# sshd-auto-setup.cmd
+	##############################
+	SetOutPath $TEMP\cygwin-setup
+
+	File tiny_perl_installer\perl58.dll
+	File tiny_perl_installer\lib.zip
+	File tiny_perl_installer\tinyperl.exe
+
+	File sshd-auto-setup.cmd
+	nsExec::ExecToLog '"$TEMP\cygwin-setup\tinyperl.exe" -i.bak -pe "\
+		s{CYGWIN_ROOTDIR}{$cygwin_rootdir};\
+		" sshd-auto-setup.cmd'
+
+	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
+
+	##############################
 	# patch emacs
 	##############################
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
@@ -442,8 +458,6 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\add_path_to_cygwin.bat"'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\home_current_user.bat"'
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\add_path_to_home_bin.bat"'
-	File sshd-auto-setup.cmd
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\sshd-auto-setup.cmd"'
 
 SectionEnd
 
