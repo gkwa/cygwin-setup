@@ -14,7 +14,6 @@ bash --login -c "/bin/ssh-host-config -y -c ntsec -u sshd_account -w $(cat /tmp/
 
 rm -f /tmp/out.pass
 
-sed -i.bak "s/#.*PasswordAuthentication.*yes/PasswordAuthentication no/" /etc/sshd_config
 
 rem new style firewall / add exception
 netsh advfirewall firewall add rule name=SSH dir=in action=allow protocol=tcp localport=22 2>NUL
