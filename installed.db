@@ -24,6 +24,7 @@ cygwin cygwin-0.tar.bz2 0
 cygwin-doc cygwin-doc-0.tar.bz2 0
 ddir ddir-0.tar.bz2 0
 diffutils diffutils-0.tar.bz2 0
+dos2unix dos2unix-0.tar.bz2 0
 editrights editrights-0.tar.bz2 0
 email email-*.tar.bz2 0
 expat expat-0.tar.bz2 0
