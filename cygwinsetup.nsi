@@ -352,7 +352,6 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	DetailPrint "Create ~/bin"
 	SetOutPath '$0\bin'
 	File pathman.exe
-	File setx.exe
 	File robocopy.exe
 
 	SetOutPath '$0' # $cygwin_rootdir\home\Administrator (for example)
@@ -362,12 +361,11 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		@echo on$\r$\n\
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
-		set setx=$0\bin\setx.exe$\r$\n\
 		set homedir=$cygwin_rootdir\home\%USERNAME%$\r$\n\
 		$\r$\n\
-		"%setx%" HOME "%homedir%"$\r$\n\
+		setx.exe HOME "%homedir%"$\r$\n\
 		reg query hkcu\environment /v HOME$\r$\n\
-		"%setx%" HOMEPATH "%homedir%"$\r$\n\
+		setx.exe HOMEPATH "%homedir%"$\r$\n\
 		reg query hkcu\environment /v HOMEPATH$\r$\n\
 		pause$\r$\n\
 	'
@@ -379,7 +377,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
 		echo.before path update:$\r$\n\
-		"$0\bin\setx.exe" PATH "$cygwin_rootdir\bin;%PATH%"$\r$\n\
+		setx.exe PATH "$cygwin_rootdir\bin;%PATH%"$\r$\n\
 		echo.after path update:$\r$\n\
 		reg query hkcu\environment /v PATH$\r$\n\
 		pause$\r$\n\
@@ -393,7 +391,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		$\r$\n\
 		echo.before path update:$\r$\n\
 		reg query hkcu\environment /v PATH$\r$\n\
-		"$0\bin\setx.exe" PATH "$0\bin;%PATH%"$\r$\n\
+		setx.exe PATH "$0\bin;%PATH%"$\r$\n\
 		echo.after path update:$\r$\n\
 		reg query hkcu\environment /v PATH$\r$\n\
 		pause$\r$\n\
