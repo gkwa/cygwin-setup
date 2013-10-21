@@ -15,7 +15,7 @@ Caption "Streambox $(^Name) Installer"
 
 !define emacs-version 24.3
 !define emacs-zip emacs-${emacs-version}-bin-i386.zip
-!define msysgit-installer PortableGit-1.7.10-preview20120409.7z
+!define msysgit-installer PortableGit-1.8.4-preview20130916.7z
 
 ;--------------------------------
 ; docs
