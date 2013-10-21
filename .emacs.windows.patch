@@ -1,24 +1,22 @@
---- .emacs.orig_from_installer	2012-05-07 14:19:40.000000000 -0700
-+++ .emacs	2013-03-07 16:38:35.797851500 -0800
-@@ -221,8 +221,8 @@
-     (progn
-       (setq explicit-shell-file-name "c:/cygwin/bin/bash.exe")
- ;;      (add-to-list 'Info-directory-list "c:/cygwin/usr/share/info")
+--- .emacs!!c!!cygwin!home!Administrator!.~1~		2013-10-13 21:24:18.000000000 +0100
++++ /home/Administrator/.emacs				2013-10-21 21:32:55.650398500 +0100
+@@ -239,8 +239,8 @@
+       (setq explicit-shell-file-name "c:/cygwin64/bin/bash.exe")
+       (setq explicit-shell-file-name "c:/cygwin/bin/bash.exe"))
+       ;;      (add-to-list 'Info-directory-list "c:/cygwin/usr/share/info")
 -      (require 'cygwin-mount)
 -      (cygwin-mount-activate)
 +;      (require 'cygwin-mount)
 +;      (cygwin-mount-activate)
  
-       ; http://blogs.law.harvard.edu/hoanga/2008/04/10/fixing-that-really-irritating-perl-warning-setting-locale-failed-on/
-       ; this error happens in emacs subshells when using 'git commit' unless you have set LC_ALL and LC_CTYPE.
-@@ -406,7 +406,9 @@
- (require 'server)
- (when (and (eq window-system 'w32) (file-exists-p (getenv "APPDATA")))
-   (setq server-auth-dir (concat (getenv "APPDATA") "/.emacs.d/server"))
--  (make-directory server-auth-dir))
-+  (setq parent-server-auth-dir (concat (getenv "APPDATA") "/.emacs.d"))
-+  (if (not (file-directory-p server-auth-dir))
-+      (make-directory server-auth-dir t)))
+       ;; http://blogs.law.harvard.edu/hoanga/2008/04/10/fixing-that-really-irritating-perl-warning-setting-locale-failed-on/
+       ;; this error happens in emacs subshells when using 'git commit' unless you have set LC_ALL and LC_CTYPE.
+@@ -995,7 +995,7 @@
+ ;; http://orgmode.org/worg/org-tutorials/advanced-searching.html
  
- ;; --------------------------------------------------
- ;; given some path such as  \\10.0.2.10\Production\Streambox\...\StreamboxOSX3.72b32.zip
+ (setq org-agenda-files '("~/notes.txt"))
+-(setq org-default-notes-file (concat org-directory "~/notes.txt"))
++; (setq org-default-notes-file (concat org-directory "~/notes.txt"))
+ ;; http://lists.gnu.org/archive/html/emacs-orgmode/2011-09/msg00267.html
+ (setq org-agenda-text-search-extra-files
+       (directory-files "~/notes" t "^[^.#].*\\.\\(org$\\|org_archive$\\)"))
