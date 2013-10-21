@@ -4,7 +4,7 @@ REM -*- bat -*-
 rem http://typesafe.be/2011/05/28/automating-openssh-installations-on-windows-server-using-cygwin/
 
 
-cd "CYGWIN_ROOTDIR\bin"
+set PATH=CYGWIN_ROOTDIR\bin;%PATH%
 
 
 net stop sshd 2>NUL
