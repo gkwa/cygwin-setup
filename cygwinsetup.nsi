@@ -430,8 +430,8 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 	File sshd-auto-setup.cmd
 	nsExec::ExecToLog '"$TEMP\cygwin-setup\tinyperl.exe" -i.bak -pe "\
-		s{CYGWIN_ROOTDIR}{$cygwin_rootdir};\
-		" sshd-auto-setup.cmd'
+		s{CYGWIN_ROOTDIR}{$$ARGV[1]};\
+		" sshd-auto-setup.cmd "$cygwin_rootdir"'
 
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
 
