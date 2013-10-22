@@ -18,6 +18,6 @@ rm -f /tmp/out.pass
 rem new style firewall / add exception
 netsh advfirewall firewall add rule name=SSH dir=in action=allow protocol=tcp localport=22 2>NUL
 rem old style firewall / add exception
-netsh firewall add portopening protocol = tcp port = 22 name = "ssh" mode = enable scope = all 2>NUL
+netsh advfirewall firewall add rule name=SSH dir=in action=allow protocol=tcp localport=22  2>NUL
 
 net start sshd
