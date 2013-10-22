@@ -59,6 +59,9 @@ fstab: test_fstab
 test_fstab:
 	perl -w configure_fstab.pl t/t1/fstab
 
+test_batchfile_rootdir_replace:
+	$(MAKE) -C t/t2 t
+
 upload: $(installer) $(changelog)
 	-robocopy . //10.0.2.10/Development/tools /w:1 /r:1 $^
 	-robocopy . //10.0.2.10/users/taylor /w:1 /r:1 $^
@@ -69,6 +72,7 @@ run: $(installer)
 clean:
 	$(QUIET_MAKE)$(MAKE) -C add_reboot_icon_to_quicklaunch_bar \
 		installer=add_reboot_icon_to_quicklaunch_bar.exe clean
+	$(QUIET_MAKE)$(MAKE) -C t/t2 clean
 	$(RM) configure_fstab.exe
 	$(RM) $(installer)
 	$(RM) $(changelog)
