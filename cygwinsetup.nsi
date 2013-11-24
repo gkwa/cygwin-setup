@@ -470,6 +470,9 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	SetShellVarContext current
 	CreateShortCut "$DESKTOP\Cygwin Setup Temp.lnk" "$TEMP\cygwin-setup"
 
+	SetShellVarContext current
+	CreateShortCut "$DESKTOP\Startup.lnk" '$SMSTARTUP'
+
 	StrCpy $R1 '$PROGRAMFILES\emacs-${emacs-version}\bin\runemacs.exe'
 	CreateShortCut $DESKTOP\Emacs.lnk '$R1' '' '$R1'
 
