@@ -439,6 +439,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	# patch emacs
 	##############################
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
+	WriteINIStr '$TEMP\cygwin-setup\debug_variables_log.txt' DEBUG USER_HOME_DIR1 '$0'
 	SetOutPath '$0'
 	File .emacs.windows.patch
 
@@ -457,6 +458,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	##############################
 
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
+	WriteINIStr '$TEMP\cygwin-setup\debug_variables_log.txt' DEBUG USER_HOME_DIR2 '$0'
 	SetOutPath '$0'
 	ExpandEnvStrings $1 %COMSPEC%
 	nsExec::ExecToLog '"$1" /c "$0\add_path_to_cygwin.bat"'
