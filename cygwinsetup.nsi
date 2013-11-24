@@ -399,6 +399,8 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	FileClose $R1
 
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
+	ExpandEnvStrings $1 %COMSPEC%
+	Exec '"$1" /c start /min "$WINDIR\explorer.exe" "$0"'
 
 	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
 	FileWrite $R1 '\
