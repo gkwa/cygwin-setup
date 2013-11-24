@@ -458,9 +458,10 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
 	SetOutPath '$0'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\add_path_to_cygwin.bat"'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\home_current_user.bat"'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\add_path_to_home_bin.bat"'
+	ExpandEnvStrings $1 %COMSPEC%
+	nsExec::ExecToLog '"$1" /c "$0\add_path_to_cygwin.bat"'
+	nsExec::ExecToLog '"$1" /c "$0\home_current_user.bat"'
+	nsExec::ExecToLog '"$1" /c "$0\add_path_to_home_bin.bat"'
 
 SectionEnd
 
