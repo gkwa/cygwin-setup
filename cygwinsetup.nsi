@@ -467,6 +467,9 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$1" /c "$0\home_current_user.bat"'
 	nsExec::ExecToLog '"$1" /c "$0\add_path_to_home_bin.bat"'
 
+	SetShellVarContext current
+	CreateShortCut "$DESKTOP\Cygwin Setup Temp.lnk" "$TEMP\cygwin-setup"
+
 	StrCpy $R1 '$PROGRAMFILES\emacs-${emacs-version}\bin\runemacs.exe'
 	CreateShortCut $DESKTOP\Emacs.lnk '$R1' '' '$R1'
 
