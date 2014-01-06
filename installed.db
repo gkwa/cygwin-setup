@@ -85,6 +85,7 @@ openssh openssh-0.tar.bz2 0
 openssl openssl-0.tar.bz2 0
 p7zip p7zip-0.tar.bz2 0
 patch patch-0.tar.bz2 0
+patchutils patchutils-*.tar.bz2 0
 procps procps-0.tar.bz2 0
 python python-0.tar.bz2 0
 rebase rebase-0.tar.bz2 0
