@@ -344,7 +344,7 @@ SectionEnd
 Section download_taylor_specific_settings section_download_taylor_specific_settings
 
 	# Create $cygwin_rootdir\home\%USERNAME%, download
-	# http://69.90.235.86/o.zip and expand it into
+	# http://taylors-bucket.s3.amazonaws.com/o.zip and expand it into
 	# $cygwin_rootdir\home\%USERNAME%
 
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
@@ -412,7 +412,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 			$TEMP\cygwin-setup\wget.exe ^$\r$\n\
 			--no-clobber ^$\r$\n\
 			--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-			http://69.90.235.86/o.zip$\r$\n\
+			http://taylors-bucket.s3.amazonaws.com/o.zip$\r$\n\
 			cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/taylor.monacelli o.zip /r:5 /w:3$\r$\n\
 		)$\r$\n\
 		$\r$\n\
