@@ -341,6 +341,15 @@ Section "Section Name 1" Section1
 
 SectionEnd
 
+Section Compile_git section_compile_git
+
+	SetOutPath '$cygwin_rootdir\tmp'
+	ExpandEnvStrings $0 %COMSPEC%
+	File compile_lastest_git.sh
+	nsExec::ExecToLog '"$0" /c start /D "$cygwin_rootdir\tmp" "$cygwin_rootdir\bin\sh.exe" ./compile_lastest_git.sh'
+
+SectionEnd
+
 Section download_taylor_specific_settings section_download_taylor_specific_settings
 
 	# Create $cygwin_rootdir\home\%USERNAME%, download
@@ -491,15 +500,6 @@ Section Configure_fstab section_configure_fstab
 	File configure_fstab.exe
 
 	nsExec::ExecToStack '"configure_fstab.exe" "$cygwin_rootdir\etc\fstab"'
-
-SectionEnd
-
-Section Compile_git section_compile_git
-
-	SetOutPath '$cygwin_rootdir\tmp'
-	ExpandEnvStrings $0 %COMSPEC%
-	File compile_lastest_git.sh
-	exec '"$0" /c start /D "$cygwin_rootdir\tmp" "$cygwin_rootdir\bin\sh.exe" ./compile_lastest_git.sh'
 
 SectionEnd
 
