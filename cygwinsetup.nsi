@@ -498,9 +498,8 @@ Section Compile_git section_compile_git
 
 	SetOutPath '$cygwin_rootdir\tmp'
 	ExpandEnvStrings $0 %COMSPEC%
-	ExpandEnvStrings $1 '%USERNAME%'
 	File compile_lastest_git.sh
-	exec '"$0" /c start /D "$cygwin_rootdir\tmp" "$cygwin_rootdir\bin\sh.exe" ./compile_lastest_git.sh "$1"'
+	exec '"$0" /c start /D "$cygwin_rootdir\tmp" "$cygwin_rootdir\bin\sh.exe" ./compile_lastest_git.sh'
 
 SectionEnd
 
