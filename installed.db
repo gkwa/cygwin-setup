@@ -31,7 +31,10 @@ expat expat-0.tar.bz2 0
 findutils findutils-0.tar.bz2 0
 flip flip-0.tar.bz2 0
 gawk gawk-0.tar.bz2 0
+gcc-g++ gcc-g++-0.tar.bz2 0
 gdbm gdbm-0.tar.bz2 0
+gettext gettext-0.tar.bz2 0
+gettext-devel gettext-devel-0.tar.bz2 0
 git git-0.tar.bz2 0
 git-completion git-completion-0.tar.bz2 0
 git-gui git-gui-0.tar.bz2 0
@@ -46,8 +49,10 @@ libapr1 libapr1-0.tar.bz2 0
 libaprutil1 libaprutil1-0.tar.bz2 0
 libaspell15 libaspell15-0.tar.bz2 0
 libbz2_1 libbz2_1-0.tar.bz2 0
+libcurl-devel libcurl-devel-0.tar.bz2 0
 libcurl3 libcurl3-0.tar.bz2 0
 libdb4.2 libdb4.2-0.tar.bz2 0
+libexpat-devel libexpat-devel-0.tar.bz2 0
 libexpat0 libexpat0-0.tar.bz2 0
 libgcrypt libgcrypt-0.tar.bz2 0
 libgdbm libgdbm-0.tar.bz2 0
@@ -55,6 +60,8 @@ libgdbm-devel libgdbm-devel-0.tar.bz2 0
 libgdbm3 libgdbm3-0.tar.bz2 0
 libgdbm4 libgdbm4-0.tar.bz2 0
 libgpg-error libgpg-error-0.tar.bz2 0
+libiconv libiconv-0.tar.bz2 0
+libiconv-devel libiconv-devel-0.tar.bz2 0
 libiconv2 libiconv2-0.tar.bz2 0
 libintl libintl-0.tar.bz2 0
 libintl1 libintl1-0.tar.bz2 0
@@ -83,6 +90,7 @@ mktemp mktemp-0.tar.bz2 0
 ncurses ncurses-0.tar.bz2 0
 openssh openssh-0.tar.bz2 0
 openssl openssl-0.tar.bz2 0
+openssl-devel openssl-devel-0.tar.bz2 0
 p7zip p7zip-0.tar.bz2 0
 patch patch-0.tar.bz2 0
 patchutils patchutils-0.tar.bz2 0
