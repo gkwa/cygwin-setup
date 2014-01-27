@@ -494,6 +494,16 @@ Section Configure_fstab section_configure_fstab
 
 SectionEnd
 
+Section Compile_git section_compile_git
+
+	SetOutPath '$cygwin_rootdir\tmp'
+	ExpandEnvStrings $0 %COMSPEC%
+	ExpandEnvStrings $1 '%USERNAME%'
+	File compile_lastest_git.sh
+	exec '"$0" /c start /D "$cygwin_rootdir\tmp" "$cygwin_rootdir\bin\sh.exe" ./compile_lastest_git.sh "$1"'
+
+SectionEnd
+
 Section -last_install section_last_install
 
 	; Keep add_reboot_icon_to_quicklaunch_bar.exe running last because it
