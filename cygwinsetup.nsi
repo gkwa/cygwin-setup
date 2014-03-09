@@ -386,9 +386,9 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
 		echo.before path update:$\r$\n\
-		setx.exe PATH "$cygwin_rootdir\bin;%PATH%"$\r$\n\
+		rem setx.exe PATH "$cygwin_rootdir\bin;%PATH%"$\r$\n\
 		echo.after path update:$\r$\n\
-		reg query hkcu\environment /v PATH$\r$\n\
+		rem reg query hkcu\environment /v PATH$\r$\n\
 		pause$\r$\n\
 	'
 	FileClose $R1
@@ -399,10 +399,10 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 		REM -*- bat -*-$\r$\n\
 		$\r$\n\
 		echo.before path update:$\r$\n\
-		reg query hkcu\environment /v PATH$\r$\n\
-		setx.exe PATH "$0\bin;%PATH%"$\r$\n\
+		rem reg query hkcu\environment /v PATH$\r$\n\
+		rem setx.exe PATH "$0\bin;%PATH%"$\r$\n\
 		echo.after path update:$\r$\n\
-		reg query hkcu\environment /v PATH$\r$\n\
+		rem reg query hkcu\environment /v PATH$\r$\n\
 		pause$\r$\n\
 	'
 	FileClose $R1
@@ -457,7 +457,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	FileOpen $R1 '$0\emacs_patch.bat' w
 	FileWrite $R1 '\
 		@echo on$\r$\n\
-		set PATH=$cygwin_rootdir\bin;%PATH%$\r$\n\
+		rem set PATH=$cygwin_rootdir\bin;%PATH%$\r$\n\
 		patch -p1 .emacs .emacs.windows.patch$\r$\n\
 	'
 	FileClose $R1
