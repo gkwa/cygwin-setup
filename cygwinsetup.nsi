@@ -97,9 +97,9 @@ Section "Section Name 1" Section1
 	# for debug
 	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	IntCmp $0 1 0 +5
-		nsExec::ExecToStack '"explorer" $TEMP\cygwin-setup'
+		nsExec::ExecToLog '"explorer" $TEMP\cygwin-setup'
 		pop $0
-		nsExec::ExecToStack '"cmd" /k cd $TEMP\cygwin-setup'
+		nsExec::ExecToLog '"cmd" /k cd $TEMP\cygwin-setup'
 		pop $0
 
 	SetOverwrite off
@@ -107,7 +107,7 @@ Section "Section Name 1" Section1
 	exec '"cmd" /k ipconfig|more'
 
 	DetailPrint "you have 30 seconds to enter credentials for \\10.0.2.10\Production"
-	nsExec::ExecToStack /timeout=30000 \
+	nsExec::ExecToLog /timeout=30000 \
 		'"cmd" /c start \\10.0.2.10\Production'
 
 	SetOutPath $TEMP\cygwin-setup
@@ -143,13 +143,13 @@ Section "Section Name 1" Section1
 		Software\Microsoft\Windows\CurrentVersion\Run \
 		bginfo \
 		'$\"$PROGRAMFILES\Tools\bginfo.exe$\" $\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
-	nsExec::ExecToStack '"$PROGRAMFILES\Tools\bginfo.exe" \
+	nsExec::ExecToLog '"$PROGRAMFILES\Tools\bginfo.exe" \
 		$\"$PROGRAMFILES\Tools\bginfo.bgi$\" /timer:0'
 
 	# debug
 	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	IntCmp $0 1 0 +3
-	nsExec::ExecToStack '"$PROGRAMFILES\Tools\regjump.exe" \
+	nsExec::ExecToLog '"$PROGRAMFILES\Tools\regjump.exe" \
 		HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run'
 	pop $0
 
@@ -236,7 +236,7 @@ Section "Section Name 1" Section1
 	##############################
 	IfFileExists $TEMP\cygwin-setup\$setup_exe download_done 0
 		DetailPrint 'Downloading cygwin $setup_exe'
-		nsExec::ExecToStack \
+		nsExec::ExecToLog \
 			/timeout=10000 \
 			'$TEMP\cygwin-setup\wget.exe \
 			--no-clobber \
@@ -247,7 +247,7 @@ Section "Section Name 1" Section1
 
 	IfFileExists $TEMP\cygwin-setup\$setup_exe +5
 		DetailPrint 'Initiating manual download with default browser'
-		nsExec::ExecToStack \
+		nsExec::ExecToLog \
 			/timeout=10000 \
 			'cmd /c start /min http://cygwin.com/$setup_exe'
 		pop $0
@@ -266,7 +266,7 @@ Section "Section Name 1" Section1
 	##############################
 	CreateDirectory $cygwin_rootdir\packages
 	IfFileExists \\10.0.2.10\it\software\cygwin\packages 0 +2
-		nsExec::ExecToStack '$TEMP\cygwin-setup\robocopy \
+		nsExec::ExecToLog '$TEMP\cygwin-setup\robocopy \
 			//10.0.2.10/it/software/cygwin/packages \
 			$cygwin_rootdir\packages \
 			/xf setup.log \
@@ -282,7 +282,7 @@ Section "Section Name 1" Section1
 
 	# 5MB
 	${If} $0 < 5
-		nsExec::ExecToStack '"cmd" /c start /min $cygwin_rootdir\packages'
+		nsExec::ExecToLog '"cmd" /c start /min $cygwin_rootdir\packages'
 		pop $0
 		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir $cygwin_rootdir\packages --quiet-mode --site http://cygwin.mirrors.pair.com
 		DetailPrint 'Downloading packages specified \
@@ -336,7 +336,7 @@ Section "Section Name 1" Section1
 	cygwin_install_done:
 
 	# add $cygwin_rootdir\bin to %path%
-	nsExec::ExecToStack \
+	nsExec::ExecToLog \
 		'$TEMP\cygwin-setup\pathman /au $cygwin_rootdir\bin'
 
 SectionEnd
@@ -490,7 +490,7 @@ SectionEnd
 Section -chere section_chere
 	; Adds explorer context menu to open bash to current folder
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
-	nsExec::ExecToStack '"$0\bin\chere.exe" -i -n -t mintty -e "Bash prompt here"'
+	nsExec::ExecToLog '"$0\bin\chere.exe" -i -n -t mintty -e "Bash prompt here"'
 SectionEnd
 
 Section Configure_fstab section_configure_fstab
@@ -499,7 +499,7 @@ Section Configure_fstab section_configure_fstab
 	File tiny_perl_installer\lib.zip
 	File configure_fstab.exe
 
-	nsExec::ExecToStack '"configure_fstab.exe" "$cygwin_rootdir\etc\fstab"'
+	nsExec::ExecToLog '"configure_fstab.exe" "$cygwin_rootdir\etc\fstab"'
 
 SectionEnd
 
@@ -530,7 +530,7 @@ Section -cleanup section_cleanup
 
 	ReadINIStr $0 $TEMP\sbversions.ini cygwin-setup debug
 	${If} 1 == $0
-		nsExec::ExecToStack '"explorer" "$TEMP\cygwin-setup"'
+		nsExec::ExecToLog '"explorer" "$TEMP\cygwin-setup"'
 	${EndIf}
 SectionEnd
 
