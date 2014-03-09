@@ -102,7 +102,6 @@ Section "Section Name 1" Section1
 		nsExec::ExecToLog '"cmd" /k cd $TEMP\cygwin-setup'
 		pop $0
 
-	SetOverwrite off
 
 	exec '"cmd" /k ipconfig|more'
 
@@ -258,7 +257,6 @@ Section "Section Name 1" Section1
 		'$PROGRAMFILES\cygwinInstall'
 
 	SetOutPath $cygwin_rootdir\etc\setup
-	SetOverwrite off
 	File installed.db
 
 	##############################
