@@ -341,7 +341,7 @@ Section "Section Name 1" Section1
 	# http://nsis.sourceforge.net/Setting_Environment_Variables_to_Active_Installer_Process
 	ReadEnvStr $R0 "PATH"
 	StrCpy $R0 "$cygwin_rootdir\bin;$R0"
-	SetEnv::SetEnvVar "PATH" $R0
+	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PATH", R0).r0'
 
 SectionEnd
 
