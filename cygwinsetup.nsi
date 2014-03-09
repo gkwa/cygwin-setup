@@ -346,7 +346,7 @@ Section Compile_git section_compile_git
 	SetOutPath '$cygwin_rootdir\tmp'
 	ExpandEnvStrings $0 %COMSPEC%
 	File compile_lastest_git.sh
-	nsExec::ExecToLog '"$cygwin_rootdir\bin\sh.exe" compile_lastest_git.sh'
+	nsExec::ExecToLog '"$cygwin_rootdir\bin\sh.exe" -x compile_lastest_git.sh'
 
 SectionEnd
 
