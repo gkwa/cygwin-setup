@@ -270,6 +270,9 @@ Section "Section Name 1" Section1
 			'cmd /c start /min http://cygwin.com/$setup_exe'
 		pop $0
 
+	# For debug don't re-install cygwin, speed up testing pathman
+	GoTo cygwin_install_done
+
 	CreateDirectory '$PROGRAMFILES\cygwinInstall'
 	SetOutPath '$PROGRAMFILES\cygwinInstall'
 	CopyFiles $TEMP\cygwin-setup\$setup_exe \
