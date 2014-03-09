@@ -200,6 +200,24 @@ Section "Section Name 1" Section1
 	exec '"cmd" /c $TEMP\cygwin-setup\emacs-setup.bat'
 
 	##############################
+	# Setup user path
+	##############################
+	FileOpen $R1 $TEMP\cygwin-setup\path-setup.bat w
+	# add $cygwin_rootdir\bin to %path%
+	SetOutPath $sysdrive\tools
+	File pathman.exe
+	FileWrite $R1 '\
+		@echo on$\r$\n\
+		set PATH=$sysdrive\tools;%PATH%$\r$\n\
+		pathman.exe /au "$cygwin_rootdir\bin"$\r$\n\
+		pathman.exe /au "$sysdrive\tools"$\r$\n\
+		echo path-setup.bat ran >$sysdrive\tools\path-setup.bat_status.txt$\r$\n\
+	'
+	FileClose $R1
+	ExpandEnvStrings $0 %COMSPEC%
+	ExecWait '"$0" /c "$TEMP\cygwin-setup\path-setup.bat"'
+
+	##############################
 	# msysgit
 	##############################
 	SetOutPath $TEMP\cygwin-setup
@@ -334,10 +352,6 @@ Section "Section Name 1" Section1
 		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwinInstall"
 		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$cygwin_rootdir\home"
 	cygwin_install_done:
-
-	# add $cygwin_rootdir\bin to %path%
-	nsExec::ExecToLog \
-		'$TEMP\cygwin-setup\pathman /au $cygwin_rootdir\bin'
 
 SectionEnd
 
