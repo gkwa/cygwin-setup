@@ -285,14 +285,14 @@ Section "Section Name 1" Section1
 		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir $cygwin_rootdir\packages --quiet-mode --site http://cygwin.mirrors.pair.com
 		DetailPrint 'Downloading packages specified \
 			in $cygwin_rootdir\etc\setup\installed.db'
-		# ExecWait \
-		# 	'$PROGRAMFILES\cygwinInstall\$setup_exe \
-		# 	--download \
-		# 	--no-desktop \
-		# 	--local-package-dir $cygwin_rootdir\packages \
-		# 	--quiet-mode \
-		# 	--site http://cygwin.osuosl.org\
-		# '
+		ExecWait \
+			'$PROGRAMFILES\cygwinInstall\$setup_exe \
+			--download \
+			--no-desktop \
+			--local-package-dir $cygwin_rootdir\packages \
+			--quiet-mode \
+			--site http://cygwin.osuosl.org\
+		'
 		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
 			exec '"cmd" /c start $TEMP\cygwin-setup\robocopy \
 				$cygwin_rootdir\packages \
