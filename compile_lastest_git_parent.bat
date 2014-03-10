@@ -1,5 +1,5 @@
-set PATH=C:\cygwin\bin:%PATH%
-set PATH=C:\cygwin64\bin:%PATH%
+set PATH=C:\cygwin\bin;%PATH%
+set PATH=C:\cygwin64\bin;%PATH%
 
 rem Git v1.7.9 doesn't recognize push.default=simple:
 git config --global --unset push.default simple
