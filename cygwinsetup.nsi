@@ -336,10 +336,6 @@ Section "Section Name 1" Section1
 	# add $cygwin_rootdir\bin to %path%
 	nsExec::ExecToLog \
 		'$TEMP\cygwin-setup\pathman /au $cygwin_rootdir\bin'
-	# http://nsis.sourceforge.net/Setting_Environment_Variables_to_Active_Installer_Process
-	ReadEnvStr $R0 "PATH"
-	StrCpy $R0 "$cygwin_rootdir\bin;$R0"
-	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PATH", R0).r0'
 
 SectionEnd
 
