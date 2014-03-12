@@ -1,8 +1,5 @@
 #!/bin/sh
 
-PATH=C:/cygwin/bin:$PATH
-PATH=C:/cygwin64/bin:$PATH
-
 mkdir -p /usr/local/src
 git clone https://github.com/gitster/git /usr/local/src/git
 
