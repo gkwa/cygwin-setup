@@ -59,6 +59,10 @@ fstab: test_fstab
 test_fstab:
 	perl -w configure_fstab.pl t/t1/fstab
 
+tls: test_links_setup
+test_links_setup:
+	@perl -w links_setup.pl
+
 test_batchfile_rootdir_replace:
 	$(MAKE) -C t/t2 t
 
