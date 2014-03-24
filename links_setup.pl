@@ -30,3 +30,7 @@ __DATA__
 
 /c/Program Files (x86)/Oracle/VirtualBox/VBoxManage.exe
 /c/Program Files/Oracle/VirtualBox/VBoxManage.exe
+
+/c/Windows/Microsoft.NET/Framework/v2.0.50727/MSBuild.exe
+/c/Windows/Microsoft.NET/Framework/v3.5/MSBuild.exe
+/c/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe
