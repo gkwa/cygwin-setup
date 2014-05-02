@@ -349,6 +349,16 @@ Section Compile_git section_compile_git
 
 SectionEnd
 
+Section Compile_bup section_compile_bup
+
+	SetOutPath '$cygwin_rootdir\tmp'
+	ExpandEnvStrings $0 %COMSPEC%
+	File compile_bup_parent.bat
+	File compile_bup.sh
+	nsExec::ExecToLog '"$0" /c compile_bup_parent.bat'
+
+SectionEnd
+
 Section download_taylor_specific_settings section_download_taylor_specific_settings
 
 	# Create $cygwin_rootdir\home\%USERNAME%, download
