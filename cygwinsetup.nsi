@@ -453,7 +453,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	SetOutPath '$0'
 	File .emacs.windows.patch
 
-	File links_setup.sh
+	File links_setup.pl
 
 	FileOpen $R1 '$0\emacs_patch.bat' w
 	FileWrite $R1 '\
