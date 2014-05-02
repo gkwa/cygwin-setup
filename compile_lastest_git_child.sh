@@ -16,4 +16,4 @@ fi
 cd /usr/local/src/git
 git reset --hard v1.9.2
 
-make -C /usr/local/src/git INSTALL=/usr/bin/install install
+make -C /usr/local/src/git PREFIX=/usr/local INSTALL=/usr/bin/install install
