@@ -18,8 +18,11 @@ while(<DATA>)
 print "@array";
 
 __DATA__
-/c/Program Files (x86)/Windows Embedded Standard 7/Tools/x86/oscdimg.exe
+/c/Program Files/Windows Embedded Standard 7/Tools/AMD64/oscdimg.exe
 /c/Program Files/Windows Embedded Standard 7/Tools/x86/oscdimg.exe
+/c/Program Files (x86)/Windows Embedded Standard 7/Tools/AMD64/oscdimg.exe
+/c/Program Files (x86)/Windows Embedded Standard 7/Tools/x86/oscdimg.exe
+
 /c/Program Files/Windows Kits/8.0/Assessment and Deployment Kit/Deployment Tools/x86/Oscdimg/oscdimg.exe
 /c/Program Files/Windows AIK/Tools/x86/oscdimg.exe
 
