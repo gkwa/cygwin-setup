@@ -1,5 +1,8 @@
 #!/bin/sh
 
+PATH=/c/cygwin/bin:$PATH
+PATH=/c/cygwin64/bin:$PATH
+
 mkdir -p /usr/local/src
 if test ! -d /usr/local/src/git
 then
@@ -16,4 +19,7 @@ fi
 cd /usr/local/src/git
 git reset --hard v1.9.2
 
-make -C /usr/local/src/git PREFIX=/usr/local INSTALL=/usr/bin/install install
+# http://git-core.googlecode.com/git/INSTALL
+make configure
+./configure --prefix=/usr/local
+make install
