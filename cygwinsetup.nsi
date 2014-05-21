@@ -104,10 +104,6 @@ Section "Section Name 1" Section1
 
 	exec '"cmd" /k ipconfig|more'
 
-	DetailPrint "you have 30 seconds to enter credentials for \\10.0.2.10\Production"
-	nsExec::ExecToLog /timeout=30000 \
-		'"cmd" /c start \\10.0.2.10\Production'
-
 	SetOutPath $TEMP\cygwin-setup
 	File 7za.exe
 	File pathman.exe
@@ -174,16 +170,10 @@ Section "Section Name 1" Section1
 	FileWrite $R1 '\
 	@echo on$\r$\n\
 	if exist "$PROGRAMFILES\emacs-${emacs-version}\NUL" goto emacs_install_done$\r$\n\
-	if exist \\10.0.2.10\it\software\emacs\${emacs-zip} ($\r$\n\
-		$TEMP\cygwin-setup\robocopy \\10.0.2.10\it\software\emacs $TEMP\cygwin-setup ${emacs-zip} /r:5 /w:3$\r$\n\
-		$\r$\n\
-	) else ($\r$\n\
-		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
-		--no-clobber ^$\r$\n\
-		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-		http://ftp.gnu.org/gnu/emacs/windows/${emacs-zip}	$\r$\n\
-		cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/it/software/emacs ${emacs-zip} /r:5 /w:3$\r$\n\
-	)$\r$\n\
+	$TEMP\cygwin-setup\wget.exe ^$\r$\n\
+	--no-clobber ^$\r$\n\
+	--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
+	http://ftp.gnu.org/gnu/emacs/windows/${emacs-zip}	$\r$\n\
 	$\r$\n\
 	$TEMP\cygwin-setup\7za.exe x -y -o"$PROGRAMFILES" $TEMP\cygwin-setup\${emacs-zip}$\r$\n\
 	:: Add emacs bin to user env path$\r$\n\
@@ -230,13 +220,6 @@ Section "Section Name 1" Section1
 	#
 	##############################
 	CreateDirectory $cygwin_rootdir\packages
-	IfFileExists \\10.0.2.10\it\software\cygwin\packages 0 +2
-		nsExec::ExecToLog '$TEMP\cygwin-setup\robocopy \
-			//10.0.2.10/it/software/cygwin/packages \
-			$cygwin_rootdir\packages \
-			/xf setup.log \
-			/xf setup.log.full \
-			/r:5 /r:10 /w:30 /mir'
 
 	${GetSize} $cygwin_rootdir\packages "/S=0M /G=1" $0 $1 $2
 	DetailPrint "$cygwin_rootdir\packages has $0 MB"
@@ -260,13 +243,6 @@ Section "Section Name 1" Section1
 			--quiet-mode \
 			--site http://cygwin.osuosl.org\
 		'
-		IfFileExists \\10.0.2.10\it\software\cygwin\packages +2 0
-			exec '"cmd" /c start $TEMP\cygwin-setup\robocopy \
-				$cygwin_rootdir\packages \
-				//10.0.2.10/it/software/cygwin/packages \
-				/xf setup.log \
-				/xf setup.log.full \
-				/r:5 /w:3 /mir'
 	${EndIf}
 
 
@@ -390,16 +366,10 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
 	FileWrite $R1 '\
 	@echo on$\r$\n\
-		if exist \\10.0.2.10\taylor.monacelli\o.zip ($\r$\n\
-			$TEMP\cygwin-setup\robocopy \\10.0.2.10\taylor.monacelli $TEMP\cygwin-setup o.zip /r:5 /w:3$\r$\n\
-			$\r$\n\
-		) else ($\r$\n\
-			$TEMP\cygwin-setup\wget.exe ^$\r$\n\
-			--no-clobber ^$\r$\n\
-			--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-			http://taylors-bucket.s3.amazonaws.com/o.zip$\r$\n\
-			cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/taylor.monacelli o.zip /r:5 /w:3$\r$\n\
-		)$\r$\n\
+		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
+		--no-clobber ^$\r$\n\
+		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
+		http://taylors-bucket.s3.amazonaws.com/o.zip$\r$\n\
 		$\r$\n\
 		$TEMP\cygwin-setup\7za.exe x -y -o"$0" $TEMP\cygwin-setup\o.zip$\r$\n\
 	'
