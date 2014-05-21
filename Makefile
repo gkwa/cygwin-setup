@@ -37,7 +37,6 @@ $(installer): sshd-auto-setup.cmd
 $(installer): configure_fstab.exe
 $(installer): bginfo.bgi
 $(installer): cygwinsetup.nsi
-$(installer): home-pull.sh
 $(installer): installed.db
 $(installer): add_reboot_icon_to_quicklaunch_bar.exe
 $(installer): Makefile

@@ -15,7 +15,6 @@ Caption "Streambox $(^Name) Installer"
 
 !define emacs-version 24.3
 !define emacs-zip emacs-${emacs-version}-bin-i386.zip
-!define msysgit-installer PortableGit-1.8.4-preview20130916.7z
 
 ;--------------------------------
 ; docs
@@ -114,7 +113,6 @@ Section "Section Name 1" Section1
 	File pathman.exe
 	File wget.exe
 	File robocopy.exe
-	File home-pull.sh
 
 	SetOutPath '$PROGRAMFILES\Tools'
 	File bginfo.exe
@@ -155,7 +153,6 @@ Section "Section Name 1" Section1
 
 	SetShellVarContext current
 	CreateShortCut "$FAVORITES\Program Files.lnk"				$PROGRAMFILES
-	CreateShortCut "$FAVORITES\Git.lnk"									$PROGRAMFILES\Git
 	CreateShortCut "$FAVORITES\Temp.lnk" 						$TEMP
 
 	# fixme: this blocks if \\10.0.2.10 isn't available...I think
@@ -198,37 +195,7 @@ Section "Section Name 1" Section1
 	FileClose $R1
 	exec '"cmd" /c $TEMP\cygwin-setup\emacs-setup.bat'
 
-	##############################
-	# msysgit
-	##############################
 	SetOutPath $TEMP\cygwin-setup
-	FileOpen $R1 $TEMP\cygwin-setup\msysgit-setup.bat w
-	FileWrite $R1 '@echo on$\r$\n\
-	if exist "$PROGRAMFILES\Git\NUL" goto msysgit_install_done$\r$\n\
-	if exist \\10.0.2.10\it\software\Git\${msysgit-installer} ($\r$\n\
-		$TEMP\cygwin-setup\robocopy \\10.0.2.10\it\software\Git $TEMP\cygwin-setup ${msysgit-installer} /r:5 /w:3$\r$\n\
-		$\r$\n\
-	) else ($\r$\n\
-		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
-		--no-clobber ^$\r$\n\
-		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-		http://msysgit.googlecode.com/files/${msysgit-installer} $\r$\n\
-		cmd /c start $TEMP\cygwin-setup\robocopy $TEMP\cygwin-setup //10.0.2.10/it/software/Git ${msysgit-installer} /r:5 /w:3$\r$\n\
-	)$\r$\n\
-	$\r$\n\
-	$TEMP\cygwin-setup\7za.exe x -y -o"$PROGRAMFILES\Git" $TEMP\cygwin-setup\${msysgit-installer}$\r$\n\
-	:: Add git bin to user env path$\r$\n\
-	:: taylor$\r$\n\
-	$TEMP\cygwin-setup\pathman.exe /au "$PROGRAMFILES\Git\bin"$\r$\n\
-	:: taylor$\r$\n\
-	:msysgit_install_done$\r$\n\
-	copy /y %TEMP%\cygwin-setup\home-pull.sh "%programfiles%\Git"$\r$\n\
-	cd "%programfiles%\Git"$\r$\n\
-	cmd /k git-bash.bat$\r$\n\
-	$\r$\n\
-	'
-	FileClose $R1
-	exec '"cmd" /c $TEMP\cygwin-setup\msysgit-setup.bat'
 
 	##############################
 	# cygwin
