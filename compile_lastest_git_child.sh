@@ -17,7 +17,7 @@ fi
 # read v1.9-rc1 as a revision number, but repo reads v1.8.5.3 no
 # problem, so refert to a git version that repo knows how to read
 cd /usr/local/src/git
-git reset --hard v1.9.2
+git reset --hard v1.9.3
 
 # http://git-core.googlecode.com/git/INSTALL
 make configure
