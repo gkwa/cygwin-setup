@@ -18,8 +18,13 @@ fi
 # problem, so refert to a git version that repo knows how to read
 cd /usr/local/src/git
 git reset --hard v2.0.0
+mkdir -p /usr/local/stow
+git_ver=$(git describe)
+echo $git_ver
+rm -rf /usr/local/stow/git-$git_ver
+make clean
+git clean -dfx
+make NO_GETTEXT=1 prefix=/usr/local/stow/git-$git_ver install
 
-# http://git-core.googlecode.com/git/INSTALL
-make configure
-./configure --prefix=/usr/local
-make install
+cd /usr/local/stow
+stow --adopt git-$git_ver
