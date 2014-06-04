@@ -4,6 +4,11 @@ PATH=/c/cygwin/bin:$PATH
 PATH=/c/cygwin64/bin:$PATH
 
 mkdir -p /usr/local/src
+
+# cygwin's git v1.7.9 doesn't support push.simple yet, but o.zip deploys
+# .gitconfig that has [push] default=simple
+git config --global --unset push.default
+
 if test ! -d /usr/local/src/git
 then
     git clone https://github.com/gitster/git /usr/local/src/git
