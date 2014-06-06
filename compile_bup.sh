@@ -12,4 +12,6 @@ fi
 
 cd /usr/local/src/bup
 ./configure
-make PREFIX=/usr/local install
+version=$(git describe)
+make PREFIX=/usr/local/stow/bup/$version install
+stow --target=/usr/local --dir=/usr/local/stow/bup $version
