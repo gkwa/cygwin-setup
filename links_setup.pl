@@ -20,6 +20,7 @@ print "@array";
 __DATA__
 /c/Program Files/Windows Embedded Standard 7/Tools/IBW/x86/sources/dism.exe
 /c/Program Files/Windows Embedded Standard 7/Tools/x86/Servicing/Dism.exe
+/c/Program Files/Windows Kits/8.1/Assessment and Deployment Kit/Deployment Tools/x86/DISM/dism.exe
 
 /c/Program Files/Windows Embedded Standard 7/Tools/AMD64/oscdimg.exe
 /c/Program Files/Windows Embedded Standard 7/Tools/x86/oscdimg.exe
