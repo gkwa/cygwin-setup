@@ -292,6 +292,16 @@ Section Compile_git section_compile_git
 
 SectionEnd
 
+Section s3-curl-install section_s3-curl-install
+
+	SetOutPath '$cygwin_rootdir\tmp'
+	ExpandEnvStrings $0 %COMSPEC%
+	File s3-curl-install-parent.bat
+	File s3-curl-install.sh
+	nsExec::ExecToLog '"$0" /c s3-curl-install-parent.bat'
+
+SectionEnd
+
 Section Compile_bup section_compile_bup
 
 	SetOutPath '$cygwin_rootdir\tmp'
