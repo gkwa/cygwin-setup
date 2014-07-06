@@ -33,6 +33,14 @@ endif
 
 MAKENSIS_SW += /Doutfile=$(installer)
 
+dropbox: ~/ephemeral/$(installer)
+dropbox: ~/ephemeral/$(changelog)
+
+~/ephemeral/$(installer): $(installer)
+	cp $< $@
+~/ephemeral/$(changelog): $(changelog)
+	cp $< $@
+
 $(installer): sshd-auto-setup.cmd
 $(installer): configure_fstab.exe
 $(installer): bginfo.bgi
