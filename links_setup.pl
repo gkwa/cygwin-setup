@@ -30,6 +30,8 @@ __DATA__
 /c/Program Files/Windows Kits/8.0/Assessment and Deployment Kit/Deployment Tools/x86/Oscdimg/oscdimg.exe
 /c/Program Files/Windows AIK/Tools/x86/oscdimg.exe
 
+/c/Program Files/Windows Kits/8.1/Assessment and Deployment Kit/Deployment Tools/x86/Oscdimg/oscdimg.exe
+
 /c/Program Files/Windows Kits/8.1/bin/x86/makecert.exe
 
 /c/Program Files (x86)/7-ZIP/7z.exe
