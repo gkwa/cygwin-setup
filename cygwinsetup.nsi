@@ -241,7 +241,7 @@ Section "Section Name 1" Section1
 			--no-desktop \
 			--local-package-dir $cygwin_rootdir\packages \
 			--quiet-mode \
-			--site http://cygwin.osuosl.org\
+			--site http://cygwin.mirror.constant.com\
 		'
 	${EndIf}
 
