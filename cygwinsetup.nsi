@@ -392,7 +392,8 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	SetOutPath $TEMP\cygwin-setup
 
 	File sshd-auto-setup.cmd
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
+	ExpandEnvStrings $1 %COMSPEC%
+	nsExec::ExecToLog '"$1" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
 
 	##############################
 	# patch emacs
