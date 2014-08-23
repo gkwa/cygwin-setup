@@ -391,15 +391,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	##############################
 	SetOutPath $TEMP\cygwin-setup
 
-	File tiny_perl_installer\perl58.dll
-	File tiny_perl_installer\lib.zip
-	File tiny_perl_installer\tinyperl.exe
-
 	File sshd-auto-setup.cmd
-	nsExec::ExecToLog '"$TEMP\cygwin-setup\tinyperl.exe" -i.bak -pe "\
-		s{CYGWIN_ROOTDIR}{$$ARGV[1]};\
-		" sshd-auto-setup.cmd "$cygwin_rootdir"'
-
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
 
 	##############################
