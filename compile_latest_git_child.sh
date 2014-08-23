@@ -33,6 +33,6 @@
     make NO_GETTEXT=1 prefix=/usr/local/stow/git-$git_ver install
 
     cd /usr/local/stow
-    stow --adopt git-$git_ver
+    stow git-$git_ver
 
 } 2>&1 | tee $0.log
