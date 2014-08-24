@@ -373,19 +373,6 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	ExpandEnvStrings $1 %COMSPEC%
 	Exec '"$1" /c start /min "$WINDIR\explorer.exe" "$0"'
 
-	FileOpen $R1 $TEMP\cygwin-setup\taylor-specific-setup.bat w
-	FileWrite $R1 '\
-	@echo on$\r$\n\
-		$TEMP\cygwin-setup\wget.exe ^$\r$\n\
-		--no-clobber ^$\r$\n\
-		--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-		http://taylors-bucket.s3.amazonaws.com/o.zip$\r$\n\
-		$\r$\n\
-		$TEMP\cygwin-setup\7za.exe x -y -o"$0" $TEMP\cygwin-setup\o.zip$\r$\n\
-	'
-	FileClose $R1
-	exec '"$SYSDIR\cmd.exe" /c $TEMP\cygwin-setup\taylor-specific-setup.bat'
-
 	##############################
 	# sshd-auto-setup.cmd
 	##############################
