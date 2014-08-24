@@ -28,7 +28,7 @@
     git_ver=$(git describe)
     echo $git_ver
     rm -rf /usr/local/stow/git-$git_ver
-    make clean
+    make clean >/dev/null
     git clean -dfx
     make NO_GETTEXT=1 prefix=/usr/local/stow/git-$git_ver install
 
