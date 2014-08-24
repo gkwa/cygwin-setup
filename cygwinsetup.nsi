@@ -395,7 +395,8 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	FileOpen $R1 '$0\emacs_patch.bat' w
 	FileWrite $R1 '\
 		@echo on$\r$\n\
-		rem set PATH=$cygwin_rootdir\bin;%PATH%$\r$\n\
+		set PATH=C:\cygwin\bin;%PATH%$\r$\n\
+		set PATH=C:\cygwin64\bin;%PATH%$\r$\n\
 		patch -p1 .emacs .emacs.windows.patch$\r$\n\
 	'
 	FileClose $R1
