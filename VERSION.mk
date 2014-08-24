@@ -1,6 +1,6 @@
 majorv=0
 minorv=0
-patchv=75
+patchv=74
 qualifierv=0
 
 version=$(majorv).$(minorv).$(patchv).$(qualifierv)
