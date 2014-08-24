@@ -401,29 +401,6 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$cygwin_rootdir\bin\sh.exe" -x dotfiles-install.sh'
 
 	##############################
-	# patch emacs
-	##############################
-	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
-	WriteINIStr '$TEMP\cygwin-setup\debug_variables_log.txt' DEBUG USER_HOME_DIR1 '$0'
-	SetOutPath '$0'
-	File .emacs.windows.patch
-
-	File links_setup.pl
-
-	FileOpen $R1 '$0\emacs_patch.bat' w
-	FileWrite $R1 '\
-		@echo on$\r$\n\
-		set PATH=C:\cygwin\bin;%PATH%$\r$\n\
-		set PATH=C:\cygwin64\bin;%PATH%$\r$\n\
-		patch -p1 .emacs .emacs.windows.patch$\r$\n\
-	'
-	FileClose $R1
-	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
-	SetOutPath '$0'
-	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\emacs_patch.bat"'
-
-	; end patch
-	##############################
 
 	SetShellVarContext current
 	CreateShortCut "$DESKTOP\Cygwin Setup Temp.lnk" "$TEMP\cygwin-setup"
