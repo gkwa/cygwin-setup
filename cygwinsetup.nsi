@@ -383,6 +383,24 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$1" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
 
 	##############################
+
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
+	WriteINIStr '$TEMP\cygwin-setup\debug_variables_log.txt' DEBUG USER_HOME_DIR2 '$0'
+	SetOutPath '$0'
+	ExpandEnvStrings $1 %COMSPEC%
+	nsExec::ExecToLog '"$1" /c "$0\add_path_to_cygwin.bat"'
+	nsExec::ExecToLog '"$1" /c "$0\home_current_user.bat"'
+	nsExec::ExecToLog '"$1" /c "$0\add_path_to_home_bin.bat"'
+
+	##############################
+	# get dotfiles from github
+
+	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
+	SetOutPath '$0'
+	File dotfiles-install.sh
+	nsExec::ExecToLog '"$cygwin_rootdir\bin\sh.exe" -x dotfiles-install.sh'
+
+	##############################
 	# patch emacs
 	##############################
 	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
@@ -405,24 +423,6 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$SYSDIR\cmd.exe" /c "$0\emacs_patch.bat"'
 
 	; end patch
-	##############################
-
-	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
-	WriteINIStr '$TEMP\cygwin-setup\debug_variables_log.txt' DEBUG USER_HOME_DIR2 '$0'
-	SetOutPath '$0'
-	ExpandEnvStrings $1 %COMSPEC%
-	nsExec::ExecToLog '"$1" /c "$0\add_path_to_cygwin.bat"'
-	nsExec::ExecToLog '"$1" /c "$0\home_current_user.bat"'
-	nsExec::ExecToLog '"$1" /c "$0\add_path_to_home_bin.bat"'
-
-	##############################
-	# get dotfiles from github
-
-	ExpandEnvStrings $0 "$cygwin_rootdir\home\%USERNAME%"
-	SetOutPath '$0'
-	File dotfiles-install.sh
-	nsExec::ExecToLog '"$cygwin_rootdir\bin\sh.exe" -x dotfiles-install.sh'
-
 	##############################
 
 	SetShellVarContext current
