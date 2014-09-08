@@ -289,13 +289,16 @@ Section Compile_git section_compile_git
 	File compile_latest_git_parent.bat
 	File compile_latest_git_child.sh
 	nsExec::ExecToLog '"$0" /c compile_latest_git_parent.bat'
+	DetailPrint "Debug: ending section_compile_git"
 
 SectionEnd
 
 Section s3-curl-install section_s3-curl-install
 
+	DetailPrint "Debug: beginning section_s3-curl-install"
 	SetOutPath '$cygwin_rootdir\tmp'
 	ExpandEnvStrings $0 %COMSPEC%
+	DetailPrint "Debug: ready to deploy s3-curl-install-parent.bat"
 	File s3-curl-install-parent.bat
 	File s3-curl-install.sh
 	nsExec::ExecToLog '"$0" /c s3-curl-install-parent.bat'
