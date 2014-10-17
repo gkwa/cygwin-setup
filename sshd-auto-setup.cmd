@@ -13,6 +13,7 @@ net stop sshd 2>NUL
 bash --login -c "/usr/bin/openssl rand 35 -base64 | tr -d ' ' | tr -d '\n' | tr -d '\r' >/tmp/out.pass"
 bash --login -c "/bin/ssh-host-config -y -c ntsec -u sshd_account -w $(cat /tmp/out.pass)"
 bash --login -c "/bin/sed -i.bak -e 's/#PrintMotd .*/PrintMotd no/' /etc/sshd_config"
+bash --login -c "/bin/sed -i.bak -e 's/#Port .*/Port 6045/' /etc/sshd_config"
 
 rm -f /tmp/out.pass
 
