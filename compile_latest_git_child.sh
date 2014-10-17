@@ -35,4 +35,4 @@
     cd /usr/local/stow
     stow git-$git_ver
 
-} 2>&1 | tee $0.log
+} >$0.log 2>&1

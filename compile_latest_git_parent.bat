@@ -6,4 +6,4 @@ git config --global --unset push.default simple
 
 sh -x compile_latest_git_child.sh
 rem turn push.simple back on
-git config --global push.default simple
+rem git config --global push.default simple
