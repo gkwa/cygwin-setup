@@ -13,9 +13,6 @@ ShowUninstDetails show
 RequestExecutionLevel admin
 Caption "Streambox $(^Name) Installer"
 
-!define emacs-version 24.3
-!define emacs-zip emacs-${emacs-version}-bin-i386.zip
-
 ;--------------------------------
 ; docs
 # http://nsis.sourceforge.net/Docs
@@ -162,28 +159,6 @@ Section "Section Name 1" Section1
 	# CreateShortCut "$FAVORITES\Tools.lnk" 					\\10.0.2.10\Development\tools
 
 	exec '"explorer" $FAVORITES'
-
-	##############################
-	# emacs
-	##############################
-	FileOpen $R1 $TEMP\cygwin-setup\emacs-setup.bat w
-	FileWrite $R1 '\
-	@echo on$\r$\n\
-	if exist "$PROGRAMFILES\emacs-${emacs-version}\NUL" goto emacs_install_done$\r$\n\
-	$TEMP\cygwin-setup\wget.exe ^$\r$\n\
-	--no-clobber ^$\r$\n\
-	--directory-prefix=$TEMP\cygwin-setup ^$\r$\n\
-	http://ftp.gnu.org/gnu/emacs/windows/${emacs-zip}	$\r$\n\
-	$\r$\n\
-	$TEMP\cygwin-setup\7za.exe x -y -o"$PROGRAMFILES" $TEMP\cygwin-setup\${emacs-zip}$\r$\n\
-	:: Add emacs bin to user env path$\r$\n\
-	$TEMP\cygwin-setup\pathman.exe /au "$PROGRAMFILES\emacs-${emacs-version}\bin"$\r$\n\
-	:emacs_install_done$\r$\n\
-	cmd /c start "$PROGRAMFILES\emacs-${emacs-version}\bin\runemacs.exe"$\r$\n\
-	$\r$\n\
-	'
-	FileClose $R1
-	exec '"cmd" /c $TEMP\cygwin-setup\emacs-setup.bat'
 
 	SetOutPath $TEMP\cygwin-setup
 
@@ -410,9 +385,6 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 	SetShellVarContext current
 	CreateShortCut "$DESKTOP\Startup.lnk" '$SMSTARTUP'
-
-	StrCpy $R1 '$PROGRAMFILES\emacs-${emacs-version}\bin\runemacs.exe'
-	CreateShortCut $DESKTOP\Emacs.lnk '$R1' '' '$R1'
 
 SectionEnd
 
