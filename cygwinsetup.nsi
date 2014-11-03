@@ -377,6 +377,24 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	File dotfiles-install.sh
 	nsExec::ExecToLog '"$cygwin_rootdir\bin\sh.exe" -x dotfiles-install.sh'
 
+	# ------------------------------
+	# Now that dotfiles are installed, start emacs so that emacs will start
+	# downloading melpa packages based off my .emacs settings
+	SetOutPath '$cygwin_rootdir\tmp'
+
+	FileOpen $R1 '$cygwin_rootdir\tmp\start_emacs.bat' w
+	FileWrite $R1 '\
+		@Echo on$\r$\n\
+		$\r$\n\
+		set PATH=$cygwin_rootdir\bin;%PATH%$\r$\n\
+		$\r$\n\
+		chdir $cygwin_rootdir\bin$\r$\n\
+		start mintty emacs$\r$\n\
+	'
+	FileClose $R1
+	ExpandEnvStrings $1 %COMSPEC%
+	nsExec::Exec '"$1" /c "$cygwin_rootdir\tmp\start_emacs.bat"'
+	# ------------------------------
 	##############################
 
 	SetShellVarContext current
