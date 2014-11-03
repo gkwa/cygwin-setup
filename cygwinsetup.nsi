@@ -352,6 +352,16 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	Exec '"$1" /c start /min "$WINDIR\explorer.exe" "$0"'
 
 	##############################
+	# replace syslogd with syslogd-ng
+	##############################
+	SetOutPath '$cygwin_rootdir\tmp'
+
+	File syslogng_parent.bat
+	File syslogng.sh
+	ExpandEnvStrings $1 %COMSPEC%
+	nsExec::ExecToLog '"$1" /c "$cygwin_rootdir\tmp\syslogng_parent.bat"'
+
+	##############################
 	# sshd-auto-setup.cmd
 	##############################
 	SetOutPath $TEMP\cygwin-setup
