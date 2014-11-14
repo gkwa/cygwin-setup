@@ -96,6 +96,8 @@ mkisofs mkisofs-0.tar.bz2 0
 mktemp mktemp-0.tar.bz2 0
 mysql mysql-0.tar.bz2 0
 ncurses ncurses-0.tar.bz2 0
+nc nc-0.tar.bz2 0
+ncurses ncurses-0.tar.bz2 0
 openssh openssh-0.tar.bz2 0
 openssl openssl-0.tar.bz2 0
 openssl-devel openssl-devel-0.tar.bz2 0
