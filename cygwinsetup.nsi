@@ -438,7 +438,7 @@ Section -last_install section_last_install
 
 	;Store uninstall info in add/remove programs
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
-	${GetSize} "$0" "/S=0K" $1 $2 $2
+	${GetSize} "$0" "/S=0K" $1 $2 $2 ;throw out $2
 	IntFmt $1 "0x%08X" $1
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}" "EstimatedSize" "$1"
 	WriteRegStr HKLM 'Software\Streambox\${name}' InstallDir '$0'
