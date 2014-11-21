@@ -3,6 +3,7 @@
 !include LogicLib.nsh
 !include FileFunc.nsh
 !include x64.nsh
+!include nsProcess.nsh
 
 Name cygwinsetup
 OutFile ${outfile}
@@ -432,6 +433,50 @@ Section -last_install section_last_install
 	SetOutPath $TEMP\cygwin-setup
 	File add_reboot_icon_to_quicklaunch_bar\add_reboot_icon_to_quicklaunch_bar.exe
 	nsExec::Exec add_reboot_icon_to_quicklaunch_bar.exe
+
+	; Create Uninstaller
+
+	;Store uninstall info in add/remove programs
+	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
+	${GetSize} "$0" "/S=0K" $1 $2 $2
+	IntFmt $1 "0x%08X" $1
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}" "EstimatedSize" "$1"
+	WriteRegStr HKLM 'Software\Streambox\${name}' InstallDir '$0'
+	WriteUninstaller "$0\Uninstall.exe"
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' UninstallString "$0\Uninstall.exe"
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' Publisher Streambox
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' DisplayVersion '${version}'
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' DisplayName '${name} v${version}'
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' DisplayIcon "$0\Uninstall.exe"
+	WriteRegDWORD HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' NoModify 1
+
+SectionEnd
+
+Section Un.cygwin
+
+	${nsProcess::KillProcess} bash.exe $R0
+	${nsProcess::KillProcess} emacs-nox.exe $R0
+
+	SimpleSC::StopService sshd
+	SimpleSC::RemoveService sshd
+
+	SimpleSC::StopService syslog-ng
+	SimpleSC::RemoveService syslog-ng
+
+	SimpleSC::StopService cron
+	SimpleSC::RemoveService cron
+
+	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
+	${If} '' != $0
+		SetOutPath $TEMP\${name}
+		File 7za.exe
+		nsExec::ExecToStack '"$TEMP\${name}\7za.exe" a -mx0 "$sysdrive\${name}.7z" "$0"'
+		pop $1
+		${If} error != $1
+			rmdir /r "$0"
+		${EndIf}
+		rmdir /r $TEMP\${name}
+	${EndIf}
 
 SectionEnd
 
