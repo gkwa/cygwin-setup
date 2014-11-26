@@ -31,6 +31,7 @@ ifneq ($(findstring $(MAKEFLAGS),w),w)
 	PRINT_DIR = --no-print-directory
 endif
 
+MAKENSIS_SW += /Dname=$(basename)
 MAKENSIS_SW += /Doutfile=$(installer)
 
 dropbox: ~/ephemeral/$(installer)

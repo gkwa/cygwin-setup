@@ -5,7 +5,7 @@
 !include x64.nsh
 !include nsProcess.nsh
 
-Name cygwinsetup
+Name ${name}
 OutFile ${outfile}
 
 XPStyle on
@@ -440,15 +440,15 @@ Section -last_install section_last_install
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
 	${GetSize} "$0" "/S=0K" $1 $2 $2 ;throw out $2
 	IntFmt $1 "0x%08X" $1
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}" "EstimatedSize" "$1"
-	WriteRegStr HKLM 'Software\Streambox\${Name}' InstallDir '$0'
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}" "EstimatedSize" "$1"
+	WriteRegStr HKLM 'Software\Streambox\${name}' InstallDir '$0'
 	WriteUninstaller "$0\Uninstall.exe"
-	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}' UninstallString "$0\Uninstall.exe"
-	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}' Publisher Streambox
-	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}' DisplayVersion '${version}'
-	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}' DisplayName '${Name} v${version}'
-	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}' DisplayIcon "$0\Uninstall.exe"
-	WriteRegDWORD HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${Name}' NoModify 1
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' UninstallString "$0\Uninstall.exe"
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' Publisher Streambox
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' DisplayVersion '${version}'
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' DisplayName '${name} v${version}'
+	WriteRegStr HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' DisplayIcon "$0\Uninstall.exe"
+	WriteRegDWORD HKLM 'Software\Microsoft\Windows\CurrentVersion\Uninstall\${name}' NoModify 1
 
 SectionEnd
 
@@ -468,18 +468,18 @@ Section Un.cygwin
 
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
 	${If} '' != $0
-		SetOutPath $TEMP\${Name}
+		SetOutPath $TEMP\${name}
 		File 7za.exe
-		nsExec::ExecToStack '"$TEMP\${Name}\7za.exe" a -mx0 "$sysdrive\${Name}.7z" "$0"'
+		nsExec::ExecToStack '"$TEMP\${name}\7za.exe" a -mx0 "$sysdrive\${name}.7z" "$0"'
 		pop $1
 		${If} error != $1
 			rmdir /r "$0"
 		${EndIf}
-		rmdir /r $TEMP\${Name}
+		rmdir /r $TEMP\${name}
 	${EndIf}
 
 	nsExec::ExecToLog '"$SYSDIR\net.exe" user sshd_account /delete'
-	SetOutPath $TEMP\${Name}
+	SetOutPath $TEMP\${name}
 	File delete-user-profile\Remove-UserProfile.ps1
 	File delete-user-profile\remove-users.cmd
 	ExpandEnvStrings $0 %COMSPEC%
@@ -487,7 +487,7 @@ Section Un.cygwin
 
 
 	# Cleanup
-	rmdir /r $TEMP\${Name}
+	rmdir /r $TEMP\${name}
 	SetOutPath $TEMP
 
 SectionEnd
