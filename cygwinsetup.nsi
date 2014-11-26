@@ -466,8 +466,6 @@ Section Un.cygwin
 	SimpleSC::StopService cron
 	SimpleSC::RemoveService cron
 
-	nsExec::ExecToLog '"$SYSDIR\net.exe" user sshd_account /delete'
-
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
 	${If} '' != $0
 		SetOutPath $TEMP\${name}
@@ -479,6 +477,18 @@ Section Un.cygwin
 		${EndIf}
 		rmdir /r $TEMP\${name}
 	${EndIf}
+
+	nsExec::ExecToLog '"$SYSDIR\net.exe" user sshd_account /delete'
+	SetOutPath $TEMP\${name}
+	File delete-user-profile\Remove-UserProfile.ps1
+	File delete-user-profile\remove-users.cmd
+	ExpandEnvStrings $0 %COMSPEC%
+	nsExec::ExecToLog '"$0" /c remove-users.cmd'
+
+
+	# Cleanup
+	rmdir /r $TEMP\${name}
+	SetOutPath $TEMP
 
 SectionEnd
 
