@@ -466,6 +466,8 @@ Section Un.cygwin
 	SimpleSC::StopService cron
 	SimpleSC::RemoveService cron
 
+	nsExec::ExecToLog '"$SYSDIR\net.exe" user sshd_account /delete'
+
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
 	${If} '' != $0
 		SetOutPath $TEMP\${name}
