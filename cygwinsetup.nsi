@@ -269,6 +269,16 @@ Section s3-curl-install section_s3-curl-install
 
 SectionEnd
 
+Section disable-motd section_disable-motd
+
+	DetailPrint "Disabling Motd"
+	Rename '$cygwin_rootdir\etc\motd' '$cygwin_rootdir\etc\motd.bak'
+	FileOpen $R1 '$cygwin_rootdir\etc\motd' w
+	FileWrite $R1 ''
+	FileClose $R1
+
+SectionEnd
+
 Section Compile_bup section_compile_bup
 
 	SetOutPath '$cygwin_rootdir\tmp'
