@@ -45,7 +45,8 @@ dropbox: ~/ephemeral/$(changelog)
 ~/ephemeral/$(changelog): $(changelog)
 	cp $< $@
 
-$(installer): sshd-auto-setup.cmd
+$(installer): sshd-auto-setup-controller.cmd
+$(installer): sshd-auto-setup.sh
 $(installer): configure_fstab.exe
 $(installer): bginfo.bgi
 $(installer): cygwinsetup.nsi

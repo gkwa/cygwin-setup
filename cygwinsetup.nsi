@@ -361,13 +361,14 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$1" /c "$cygwin_rootdir\tmp\syslogng_parent.bat"'
 
 	##############################
-	# sshd-auto-setup.cmd
+	# sshd-auto-setup
 	##############################
 	SetOutPath $TEMP\cygwin-setup
 
-	File sshd-auto-setup.cmd
+	File sshd-auto-setup-controller.cmd
+	File sshd-auto-setup.sh
 	ExpandEnvStrings $1 %COMSPEC%
-	nsExec::ExecToLog '"$1" /c "$TEMP\cygwin-setup\sshd-auto-setup.cmd"'
+	nsExec::ExecToLog '"$1" /c "$TEMP\cygwin-setup\sshd-auto-setup-controller.cmd"'
 
 	##############################
 
