@@ -32,7 +32,7 @@ cygrunsrv --remove sshd
 
 sed -i.bak \
     -e 's/#Port .*/Port 6045/' \
-    -e 's/#StrictModes .*/StrictModes yes/' \
+    -e 's/#StrictModes .*/StrictModes no/' \
     -e 's/#PrintMotd .*/PrintMotd no/' \
     /etc/sshd_config
 
