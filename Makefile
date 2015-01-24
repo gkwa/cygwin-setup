@@ -5,7 +5,11 @@ RM = rm -f
 
 include VERSION.mk
 
+branch_name := $(shell sh -c 'git rev-parse --abbrev-ref HEAD')
 installer=$(basename)_v$(version).exe
+ifneq ($(branch_name),master)
+	installer=$(basename)_$(branch_name)_v$(version).exe
+endif
 
 # Must use unicode since it supports 2048 byte strings
 # fixme: a better method is to write out smaller strings to batch file
