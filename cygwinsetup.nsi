@@ -361,6 +361,20 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 	nsExec::ExecToLog '"$1" /c "$cygwin_rootdir\tmp\syslogng_parent.bat"'
 
 	##############################
+	# set fstab before sshd setup
+	##############################
+
+	SetOutPath $TEMP\cygwin\setup
+	File tiny_perl_installer\perl58.dll
+	File tiny_perl_installer\lib.zip
+	File configure_fstab.exe
+
+	# Make sure to keep this fstab configuration _before_ cyg_server's
+	# profile is created as long as you're using priviledged separation
+	# (ssh-host-config --user cyg_server --privileged...)
+	nsExec::ExecToLog '"configure_fstab.exe" "$cygwin_rootdir\etc\fstab"'
+
+	##############################
 	# sshd-auto-setup
 	##############################
 	SetOutPath $TEMP\cygwin-setup
@@ -420,16 +434,6 @@ Section -chere section_chere
 	; Adds explorer context menu to open bash to current folder
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
 	nsExec::ExecToLog '"$0\bin\chere" -i -n -t mintty -e "Bash prompt here"'
-SectionEnd
-
-Section Configure_fstab section_configure_fstab
-	SetOutPath $TEMP\cygwin\setup
-	File tiny_perl_installer\perl58.dll
-	File tiny_perl_installer\lib.zip
-	File configure_fstab.exe
-
-	nsExec::ExecToLog '"configure_fstab.exe" "$cygwin_rootdir\etc\fstab"'
-
 SectionEnd
 
 Section -last_install section_last_install
