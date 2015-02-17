@@ -47,5 +47,12 @@ mkgroup -l >/etc/group
 chown cyg_server /var/empty
 chgrp Administrators /var/empty
 
+# http://goo.gl/Hif1j1
+# Add workaround for cygwin sshd permissions problem which prevents sshd
+# from starting
+chown $(id -u):$(id -g) /etc/ssh*
+chgrp -Rv Users /etc/ssh*
+chmod -vR 600 /etc/ssh*
+
 cygrunsrv --start sshd
 cygrunsrv --list
