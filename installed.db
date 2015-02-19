@@ -65,6 +65,7 @@ libgdbm libgdbm-0.tar.bz2 0
 libgdbm-devel libgdbm-devel-0.tar.bz2 0
 libgdbm3 libgdbm3-0.tar.bz2 0
 libgdbm4 libgdbm4-0.tar.bz2 0
+libgmp3 libgmp3-0.tar.bz2 0
 libgpg-error libgpg-error-0.tar.bz2 0
 libiconv libiconv-0.tar.bz2 0
 libiconv-devel libiconv-devel-0.tar.bz2 0
@@ -83,6 +84,7 @@ libpopt0 libpopt0-0.tar.bz2 0
 libreadline4 libreadline4-0.tar.bz2 0
 libreadline5 libreadline5-0.tar.bz2 0
 libreadline6 libreadline6-0.tar.bz2 0
+libtool libtool-0.tar.bz2 0
 libuuid-devel libuuid-devel-0.tar.bz2 0
 libxml2 libxml2-0.tar.bz2 0
 libxslt libxslt-0.tar.bz2 0
