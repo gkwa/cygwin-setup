@@ -109,6 +109,7 @@ patch patch-0.tar.bz2 0
 patchutils patchutils-0.tar.bz2 0
 procps procps-0.tar.bz2 0
 python python-0.tar.bz2 0
+python-setuptools python-setuptools-0.tar.bz2 0
 rebase rebase-0.tar.bz2 0
 rsync rsync-0.tar.bz2 0
 ruby ruby-0.tar.bz2 0
