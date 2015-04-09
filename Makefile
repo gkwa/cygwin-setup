@@ -45,6 +45,7 @@ dropbox: ~/ephemeral/$(changelog)
 ~/ephemeral/$(changelog): $(changelog)
 	cp $< $@
 
+$(installer): VERSION.mk
 $(installer): sshd-auto-setup-controller.cmd
 $(installer): sshd-auto-setup.sh
 $(installer): configure_fstab.exe
