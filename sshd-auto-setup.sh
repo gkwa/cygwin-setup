@@ -36,6 +36,13 @@ sed -i.bak \
     -e 's/#PrintMotd .*/PrintMotd no/' \
     /etc/sshd_config
 
+# Mosh doesn't use /etc/sshd_config to decide whether to show motd, so
+# lets just disable motd completely
+rm -f /etc/motd.3
+[ -f /etc/motd.2 ] && mv /etc/motd.2 /etc/motd.3
+[ -f /etc/motd.1 ] && mv /etc/motd.1 /etc/motd.2
+[ -f /etc/motd ] && mv /etc/motd /etc/motd.1
+
 # install service with cyg_server user manually
 cygrunsrv --install sshd --disp "CYGWIN sshd" \
 	  --path /usr/sbin/sshd --args "-D" --dep tcpip \
