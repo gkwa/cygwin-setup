@@ -1,4 +1,14 @@
 #!/bin/sh
 
 # Adds explorer context menu to open bash to current folder
-chere -i -n -t mintty -e "Bash prompt here"
+chere -i -f -n -t mintty -e "Bash prompt here" 2
+
+# * run emacs in minified (since emacs run in server mode) mintty at windows startup
+# * if Startup/emacsmin.lnk already exists, then mkshortcut will overwrite
+mkshortcut \
+	--workingdir=/bin \
+	--arguments="--window min --icon /bin/emacs.ico --exec bash --login -c emacs" \
+	--name Startup/emacsmin \
+	--icon=/bin/emacs.ico \
+	--smprograms \
+	/bin/mintty.exe
