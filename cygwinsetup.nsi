@@ -430,11 +430,14 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 SectionEnd
 
-Section -customizations section_customizations
-	; Adds explorer context menu to open bash to current folder
-	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
-	SetOutPath $0\bin
-	nsExec::Exec '"mintty" --exec chere --arguments=$\"-i -n -t mintty -e "Bash prompt here"$\"'
+Section -customize section_customize
+
+	SetOutPath '$cygwin_rootdir\tmp'
+	ExpandEnvStrings $0 %COMSPEC%
+	File customize_parent.bat
+	File customize.sh
+	nsExec::ExecToLog '"$0" /c customize_parent.bat'
+
 SectionEnd
 
 Section -last_install section_last_install
