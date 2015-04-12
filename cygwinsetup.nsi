@@ -430,7 +430,7 @@ Section download_taylor_specific_settings section_download_taylor_specific_setti
 
 SectionEnd
 
-Section -chere section_chere
+Section -customizations section_customizations
 	; Adds explorer context menu to open bash to current folder
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
 	SetOutPath $0\bin
