@@ -433,7 +433,8 @@ SectionEnd
 Section -chere section_chere
 	; Adds explorer context menu to open bash to current folder
 	ReadRegStr $0 HKLM Software\Cygwin\setup rootdir
-	nsExec::ExecToLog '"$0\bin\chere" -i -n -t mintty -e "Bash prompt here"'
+	SetOutPath $0\bin
+	nsExec::ExecToLog '"mintty" --exec chere --arguments=$\"-i -n -t mintty -e "Bash prompt here"$\"'
 SectionEnd
 
 Section -last_install section_last_install
