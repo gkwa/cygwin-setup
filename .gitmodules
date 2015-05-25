@@ -1,0 +1,3 @@
+[submodule "PinnedApplications"]
+	path = PinnedApplications
+	url = https://github.com/TaylorMonacelli/PinnedApplications
