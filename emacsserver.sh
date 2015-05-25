@@ -2,5 +2,5 @@
 
 if test 0 -le $(find /tmp/emacs* -iname server | wc -l)
 then
-    mintty --exec emacs
+    mintty --window=min --exec emacs
 fi
