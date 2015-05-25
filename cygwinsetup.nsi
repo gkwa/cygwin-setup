@@ -249,14 +249,8 @@ Section "Section Name 1" Section1
 
 		SetOutPath $cygwin_rootdir\tmp
 		File PinnedApplications\PinnedApplications.psm1
-		FileOpen $R1 $cygwin_rootdir\tmp\pinapps.bat w
-		FileWrite $R1 '\
-			powershell -noprofile -executionpolicy unrestricted -command ^$\r$\n\
-			"import-module .\PinnedApplications.psm1; Set-PinnedApplication -Action PinToTaskbar -FilePath $cygwin_rootdir\Cygwin2.lnk"\
-		'
-		FileClose $R1
-		ExpandEnvStrings $0 %COMSPEC%
-		nsExec::ExecToLog '"$0" /c pinapps.bat'
+		File PinnedApplications\install.ps1
+		nsExec::ExecToLog '"powershell" -NoProfile -ExecutionPolicy unrestricted -File install.ps1'
 
 		CreateShortCut "$FAVORITES\CygwinSetup.lnk" "%programfiles%\cygwinInstall"
 		CreateShortCut "$FAVORITES\CygwinHome.lnk" "$cygwin_rootdir\home"
