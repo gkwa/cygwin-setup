@@ -257,7 +257,7 @@ Section "Section Name 1" Section1
 			REM cmd.exe /c powershell.exe -command "& {Get-ExecutionPolicy}"$\r$\n\
 			REM cmd.exe /c powershell.exe -command "& {Set-ExecutionPolicy Bypass}"$\r$\n\
 			powershell -noprofile -executionpolicy unrestricted -command ^$\r$\n\
-			"import-module .\PinnedApplications.psm1; Set-PinnedApplication -Action PinToTaskbar -FilePath $cygwin_rootdir\Cygwin2.lnk"\
+			"import-module PinnedApplications; Set-PinnedApplication -Action PinToTaskbar -FilePath $cygwin_rootdir\Cygwin2.lnk"\
 			REM return execution policy$\r$\n\
 		'
 		FileClose $R1
