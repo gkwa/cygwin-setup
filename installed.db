@@ -107,6 +107,7 @@ openssl-devel openssl-devel-0.tar.bz2 0
 p7zip p7zip-0.tar.bz2 0
 patch patch-0.tar.bz2 0
 patchutils patchutils-0.tar.bz2 0
+perl_pods perl_pods-0.tar.bz2 0
 procps procps-0.tar.bz2 0
 python python-0.tar.bz2 0
 python-setuptools python-setuptools-0.tar.bz2 0
