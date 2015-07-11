@@ -20,8 +20,6 @@ cyg_server_pass=$(/usr/bin/openssl rand 35 -base64 |
 	      tr -d '\n' |
 	      tr -d '\r')
 
-mkpasswd -l >/etc/passwd
-mkgroup -l >/etc/group
 
 # this creates cyg_server user
 ssh-host-config --user cyg_server --privileged \
@@ -48,8 +46,6 @@ cygrunsrv --install sshd --disp "CYGWIN sshd" \
 	  --path /usr/sbin/sshd --args "-D" --dep tcpip \
 	  --user cyg_server --passwd "$cyg_server_pass"
 
-mkpasswd -l >/etc/passwd
-mkgroup -l >/etc/group
 
 chown cyg_server /var/empty
 chgrp Administrators /var/empty
