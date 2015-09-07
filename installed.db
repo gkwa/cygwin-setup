@@ -6,6 +6,7 @@ aspell-en aspell-en-0.tar.bz2 0
 autoconf autoconf-0.tar.bz2 0
 autoconf2.1 autoconf2.1-0.tar.bz2 0
 autoconf2.5 autoconf2.5-0.tar.bz2 0
+automake automake-0.tar.bz2 0
 base-files base-files-0.tar.bz2 0
 base-passwd base-passwd-0.tar.bz2 0
 bash bash-0.tar.bz2 0
