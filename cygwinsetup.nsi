@@ -289,6 +289,16 @@ Section Compile_bup section_compile_bup
 
 SectionEnd
 
+Section Compile_jq section_compile_jq
+
+	SetOutPath '$cygwin_rootdir\tmp'
+	ExpandEnvStrings $0 %COMSPEC%
+	File compile_jq_parent.bat
+	File compile_jq.sh
+	nsExec::ExecToLog '"$0" /c compile_jq_parent.bat'
+
+SectionEnd
+
 Section download_taylor_specific_settings section_download_taylor_specific_settings
 
 	# Create $cygwin_rootdir\home\%USERNAME%, download
