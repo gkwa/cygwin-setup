@@ -11,3 +11,6 @@ autoreconf -i
 ./configure --disable-maintainer-mode --prefix=/usr/local/stow/jq-$version
 make
 make install
+
+cd /usr/local/stow
+stow jq-$version
