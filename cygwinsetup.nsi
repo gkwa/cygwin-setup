@@ -207,7 +207,7 @@ Section "Section Name 1" Section1
 	${If} $0 < 5
 		nsExec::ExecToLog '"cmd" /c start /min $cygwin_rootdir\packages'
 		pop $0
-		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir $cygwin_rootdir\packages --quiet-mode --site http://cygwin.mirrors.hoobly.com
+		# cmd /c "%programfiles%\cygwinInstall\$setup_exe" --download --no-desktop --local-package-dir $cygwin_rootdir\packages --quiet-mode --site http://mirrors.sonic.net/cygwin
 		DetailPrint 'Downloading packages specified \
 			in $cygwin_rootdir\etc\setup\installed.db'
 		ExecWait \
@@ -216,7 +216,7 @@ Section "Section Name 1" Section1
 			--no-desktop \
 			--local-package-dir $cygwin_rootdir\packages \
 			--quiet-mode \
-			--site http://cygwin.mirrors.hoobly.com\
+			--site http://mirrors.sonic.net/cygwin\
 		'
 	${EndIf}
 
