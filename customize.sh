@@ -8,7 +8,7 @@ chere -i -f -n -t mintty -e "Bash prompt here" 2
 mkshortcut \
 	--workingdir=/bin \
 	--arguments="--window min --icon /bin/emacs.ico --exec emacs-nox --daemon" \
-	--name Startup/emacsmin \
+	--name 'Startup/emacsd' \
 	--icon=/bin/emacs.ico \
 	--smprograms \
 	/bin/mintty.exe
