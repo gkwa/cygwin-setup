@@ -7,7 +7,7 @@ chere -i -f -n -t mintty -e "Bash prompt here" 2
 # * if Startup/emacsmin.lnk already exists, then mkshortcut will overwrite
 mkshortcut \
 	--workingdir=/bin \
-	--arguments="--window min --icon /bin/emacs.ico --exec bash --login -c emacs" \
+	--arguments="--window min --icon /bin/emacs.ico --exec emacs-nox --daemon" \
 	--name Startup/emacsmin \
 	--icon=/bin/emacs.ico \
 	--smprograms \
