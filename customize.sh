@@ -12,3 +12,12 @@ mkshortcut \
 	--icon=/bin/emacs.ico \
 	--smprograms \
 	/bin/mintty.exe
+
+# create sesion a (sa)
+mkshortcut \
+	--workingdir=/bin \
+	--arguments="--window min --title \"tmux sa\" --position 60,5 \
+		--exec sh -c 'tmux new-session -s sa || tmux attach -t sa'" \
+	--name Startup/tmux \
+	--smprograms \
+	/bin/mintty.exe
