@@ -65,6 +65,7 @@ libdb4.2 libdb4.2-0.tar.bz2 0
 libexpat-devel libexpat-devel-0.tar.bz2 0
 libexpat0 libexpat0-0.tar.bz2 0
 libgcrypt libgcrypt-0.tar.bz2 0
+libgcrypt-devel libgcrypt-devel-0.tar.bz2 0
 libgdbm libgdbm-0.tar.bz2 0
 libgdbm-devel libgdbm-devel-0.tar.bz2 0
 libgdbm3 libgdbm3-0.tar.bz2 0
