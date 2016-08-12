@@ -1,6 +1,5 @@
 INSTALLED.DB 2
 alternatives alternatives-0.tar.bz2 0
-ash ash-0.tar.bz2 0
 aspell aspell-0.tar.bz2 0
 aspell-en aspell-en-0.tar.bz2 0
 autoconf autoconf-0.tar.bz2 0
@@ -98,7 +97,6 @@ lynx lynx-0.tar.bz2 0
 m4 m4-0.tar.bz2 0
 make make-0.tar.bz2 0
 man man-0.tar.bz2 0
-minires minires-0.tar.bz2 0
 mkisofs mkisofs-0.tar.bz2 0
 mktemp mktemp-0.tar.bz2 0
 mosh mosh-0.tar.bz2 0
