@@ -12,6 +12,6 @@ fi
 
 cd /usr/local/src/bup
 ./configure
-version=$(git describe)
+version=$(git describe --always --match="[0-9]*")
 make PREFIX=/usr/local/stow/bup/$version install
 stow --target=/usr/local --dir=/usr/local/stow/bup $version
