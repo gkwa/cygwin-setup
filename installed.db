@@ -123,6 +123,7 @@ scons scons-0.tar.bz2 0
 sed sed-0.tar.bz2 0
 smartmontools smartmontools-0.tar.bz2 0
 sqlite3 sqlite3-0.tar.bz2 0
+squid squid-0.tar.bz2 0
 ssmtp ssmtp-0.tar.bz2 0
 stow stow-0.tar.bz2 0
 stunnel stunnel-0.tar.bz2 0
