@@ -79,7 +79,7 @@ Function .onInit
 
 	StrCpy $cygwin_rootdir $sysdrive\cygwin
 	${If} ${RunningX64}
-		StrCpy $cygwin_rootdir $sysdrive\cygwin64
+		StrCpy $cygwin_rootdir $sysdrive\cygwin
 	${EndIf}
 
 FunctionEnd
