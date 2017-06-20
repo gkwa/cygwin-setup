@@ -11,14 +11,12 @@ else
 fi
 
 cd /usr/local/src/bup
-# workaround:
-(
-	cd /
-	mkdir -p include
-	ln -s usr/include/python2.7 include/python2.7
-)
 
-./configure
-version=$(git describe --always --match="[0-9]*")
-make PREFIX=/usr/local/stow/bup/$version install
+mkdir -p /include
+rm -f /include/python2.7
+ln -s /usr/include/python2.7 /include/python2.7
+
+./configure &&
+version=$(git describe --always --match="[0-9]*") &&
+make PREFIX=/usr/local/stow/bup/$version install &&
 stow --target=/usr/local --dir=/usr/local/stow/bup $version
