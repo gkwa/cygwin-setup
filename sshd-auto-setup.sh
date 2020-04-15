@@ -15,10 +15,7 @@ net user sshd /delete
 net user sshd_account /delete
 net user cyg_server /delete
 
-cyg_server_pass=$(/usr/bin/openssl rand -base64 35 |
-	      tr -d ' ' |
-	      tr -d '\n' |
-	      tr -d '\r')
+cyg_server_pass=$(/usr/bin/openssl rand -base64 35)
 
 mkpasswd -l >/etc/passwd
 mkgroup -l >/etc/group
