@@ -15,7 +15,7 @@ net user sshd /delete
 net user sshd_account /delete
 net user cyg_server /delete
 
-cyg_server_pass=$(/usr/bin/openssl rand 35 -base64 |
+cyg_server_pass=$(/usr/bin/openssl rand -base64 35 |
 	      tr -d ' ' |
 	      tr -d '\n' |
 	      tr -d '\r')
@@ -61,5 +61,5 @@ chown $(id -u):$(id -g) /etc/ssh*
 chgrp -Rv Users /etc/ssh*
 chmod -vR 600 /etc/ssh*
 
-cygrunsrv --start sshd
+cygrunsrv --start cygsshd
 cygrunsrv --list
