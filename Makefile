@@ -13,7 +13,7 @@ endif
 
 # Must use unicode since it supports 2048 byte strings
 # fixme: a better method is to write out smaller strings to batch file
-MAKENSIS=c:/Program\ Files/NSIS/Unicode/makensis.exe
+MAKENSIS=c:/Program\ Files\ \(x86\)/NSIS/Unicode/makensis.exe
 
 VPATH=add_reboot_icon_to_quicklaunch_bar
 
