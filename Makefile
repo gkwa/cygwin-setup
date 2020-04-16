@@ -37,14 +37,6 @@ endif
 
 MAKENSIS_SW += /Doutfile=$(installer)
 
-dropbox: ~/ephemeral/$(installer)
-dropbox: ~/ephemeral/$(changelog)
-
-~/ephemeral/$(installer): $(installer)
-	cp $< $@
-~/ephemeral/$(changelog): $(changelog)
-	cp $< $@
-
 $(installer): VERSION.mk
 $(installer): sshd-auto-setup-controller.cmd
 $(installer): sshd-auto-setup.sh
