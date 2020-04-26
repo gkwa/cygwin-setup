@@ -58,5 +58,7 @@ chown $(id -u):$(id -g) /etc/ssh*
 chgrp -Rv Users /etc/ssh*
 chmod -vR 600 /etc/ssh*
 
+sed -i'' -e 's/#PrintLastLog yes/PrintLastLog no/' /etc/sshd_config
+
 cygrunsrv --start cygsshd
 cygrunsrv --list
